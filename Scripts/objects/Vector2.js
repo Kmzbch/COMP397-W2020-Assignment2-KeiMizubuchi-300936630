@@ -2,21 +2,32 @@
 var objects;
 (function (objects) {
     var Vector2 = /** @class */ (function () {
-        // CONSTRUCTOR
-        function Vector2(x, y, displayObject) {
-            if (x === void 0) { x = 0; }
-            if (y === void 0) { y = 0; }
+        function Vector2(first, second, third) {
+            if (first === void 0) { first = 0; }
+            if (second === void 0) { second = 0; }
             // Initialize member variables
             this._x = 0;
             this._y = 0;
             this._magnitude = 0;
             this._sqrMagnitude = 0;
-            if (displayObject != undefined) {
-                this._displayObject = displayObject;
+            if (third != undefined) {
+                this._displayObject = third;
             }
-            // set x and y
-            this.x = x;
-            this.y = y;
+            if (typeof first == "number") {
+                // set x and y
+                this.x = first;
+                this.y = second;
+            }
+            if (first instanceof Array) {
+                // set x and y
+                this.x = first[0];
+                this.y = first[1];
+            }
+            if (first instanceof Vector2) {
+                // set x and y
+                this.x = first.x;
+                this.y = first.y;
+            }
         }
         Object.defineProperty(Vector2.prototype, "x", {
             // PUBLIC PROPERTIES
@@ -91,6 +102,9 @@ var objects;
         };
         Vector2.prototype.toString = function () {
             return "(" + this.x + ", " + this.y + ")";
+        };
+        Vector2.prototype.toArray = function () {
+            return [this.x, this.y];
         };
         /**
          * This method sets the current vector to a magnitude of 1 (the unit vector)

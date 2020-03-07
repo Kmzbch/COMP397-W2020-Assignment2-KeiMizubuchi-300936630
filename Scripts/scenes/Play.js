@@ -29,14 +29,17 @@ var scenes;
         Play.prototype.Start = function () {
             this._ocean = new objects.Ocean();
             this._plane = new objects.Plane();
+            this._island = new objects.Island();
             this.Main();
         };
         Play.prototype.Update = function () {
             this._ocean.Update();
             this._plane.Update();
+            this._island.Update();
         };
         Play.prototype.Main = function () {
             this.addChild(this._ocean);
+            this.addChild(this._island);
             this.addChild(this._plane);
         };
         return Play;

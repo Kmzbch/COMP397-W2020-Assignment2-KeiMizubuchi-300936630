@@ -16,13 +16,12 @@ var objects;
 (function (objects) {
     var GameObject = /** @class */ (function (_super) {
         __extends(GameObject, _super);
-        // CONSTRUCTOR
-        function GameObject(imageString, x, y, centered) {
-            if (imageString === void 0) { imageString = config.Game.ASSETS.getResult("placeholder"); }
-            if (x === void 0) { x = 0; }
-            if (y === void 0) { y = 0; }
-            if (centered === void 0) { centered = false; }
-            var _this = _super.call(this, imageString) || this;
+        function GameObject(first, second, third, fourth) {
+            if (first === void 0) { first = config.Game.ASSETS.getResult("placeholder"); }
+            if (second === void 0) { second = 0; }
+            if (third === void 0) { third = 0; }
+            if (fourth === void 0) { fourth = false; }
+            var _this = _super.call(this, first) || this;
             // initialization
             _this._width = 0;
             _this._height = 0;
@@ -34,8 +33,21 @@ var objects;
             _this._isCentered = false;
             _this.width = _this.getBounds().width;
             _this.height = _this.getBounds().height;
-            _this.isCentered = centered;
-            _this.position = new objects.Vector2(x, y, _this);
+            if (typeof third == "boolean") {
+                _this.isCentered = third;
+            }
+            if (typeof third == "undefined") {
+                _this.isCentered = false;
+            }
+            if (fourth) {
+                _this.isCentered = fourth;
+            }
+            if ((typeof second == "number") && (typeof third == "number")) {
+                _this.position = new objects.Vector2(second, third, _this);
+            }
+            if (second instanceof objects.Vector2) {
+                _this.position = second;
+            }
             return _this;
         }
         Object.defineProperty(GameObject.prototype, "width", {

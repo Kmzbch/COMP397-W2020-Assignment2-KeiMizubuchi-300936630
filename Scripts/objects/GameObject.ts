@@ -93,10 +93,12 @@ module objects
 
 
         // CONSTRUCTOR
-        constructor(imageString:Object = config.Game.ASSETS.getResult("placeholder"), 
-        x:number = 0, y:number = 0, centered:boolean = false)
+        constructor(imageString?: Object, x?: number, y?: number, centered?: boolean)
+        constructor(imageString: Object, position: Vector2, centered?:boolean)
+        constructor(first:Object = config.Game.ASSETS.getResult("placeholder"), 
+        second:Vector2 | number = 0, third: boolean | number = 0, fourth: boolean = false)
         {
-            super(imageString);
+            super(first);
 
             // initialization
             this._width = 0;
@@ -111,10 +113,30 @@ module objects
             this.width = this.getBounds().width;
             this.height = this.getBounds().height;
 
-            this.isCentered = centered;
+            if(typeof third == "boolean")
+            {
+                this.isCentered = third;
+            }
 
-            this.position = new Vector2(x, y, this);
+            if(typeof third == "undefined")
+            {
+                this.isCentered = false;
+            }
 
+            if(fourth)
+            {
+                this.isCentered = fourth;
+            }
+            
+            if((typeof second == "number") && (typeof third == "number"))
+            {
+                this.position = new Vector2(second, third, this);
+            }
+
+            if(second instanceof Vector2)
+            {
+                this.position = second;
+            }
         }
 
         // PRIVATE METHODS
