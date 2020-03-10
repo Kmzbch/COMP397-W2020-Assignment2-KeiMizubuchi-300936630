@@ -11,12 +11,15 @@ var Game = (function () {
     var assetManifest = [
         { id: "button", src: "./Assets/images/button.png" },
         { id: "placeholder", src: "./Assets/images/placeholder.png" },
-        { id: "startButton", src: "./Assets/images/startButton.png" },
+        { id: "playButton", src: "./Assets/images/playButton.png" },
+        { id: "instructionsButton", src: "./Assets/images/instructionsButton.png" },
+        { id: "exitButton", src: "./Assets/images/exitButton.png" },
         { id: "nextButton", src: "./Assets/images/nextButton.png" },
         { id: "backButton", src: "./Assets/images/backButton.png" },
         { id: "ocean", src: "./Assets/images/ocean.gif" },
-        { id: "plane", src: "./Assets/images/plane.png" },
-        { id: "island", src: "./Assets/images/island.png" }
+        { id: "avatar", src: "./Assets/images/avatar.png" },
+        { id: "island", src: "./Assets/images/island.png" },
+        { id: "cloud", src: "./Assets/images/cloud.png" }
     ];
     function Preload() {
         assets = new createjs.LoadQueue(); // asset container
@@ -36,7 +39,7 @@ var Game = (function () {
         createjs.Ticker.on('tick', Update);
         stage.enableMouseOver(20);
         currentSceneState = scenes.State.NO_SCENE;
-        config.Game.SCENE = scenes.State.START;
+        config.Game.SCENE = scenes.State.Menu;
     }
     /**
      * This function is triggered every frame (16ms)
@@ -62,9 +65,13 @@ var Game = (function () {
         }
         // switch to the new scene
         switch (config.Game.SCENE) {
-            case scenes.State.START:
-                console.log("switch to Start Scene");
-                currentScene = new scenes.Start();
+            case scenes.State.Menu:
+                console.log("switch to Menu Scene");
+                currentScene = new scenes.Menu();
+                break;
+            case scenes.State.Instructions:
+                console.log("switch to Instructions Scene");
+                currentScene = new scenes.Instructions();
                 break;
             case scenes.State.PLAY:
                 console.log("switch to Play Scene");
@@ -79,5 +86,11 @@ var Game = (function () {
         stage.addChild(currentScene);
     }
     window.addEventListener('load', Preload);
+    // attach keydown and keyup event to the window
+    window.addEventListener("click", function (event) {
+        if (currentScene && currentSceneState === scenes.State.PLAY) {
+            currentScene.DetectClickEvent();
+        }
+    });
 })();
 //# sourceMappingURL=game.js.map

@@ -16,7 +16,6 @@ var scenes;
 (function (scenes) {
     var Play = /** @class */ (function (_super) {
         __extends(Play, _super);
-        // PUBLIC PROPERTIES
         // CONSTRUCTOR
         function Play() {
             var _this = _super.call(this) || this;
@@ -28,19 +27,50 @@ var scenes;
         //initialize and instatiate
         Play.prototype.Start = function () {
             this._ocean = new objects.Ocean();
-            this._plane = new objects.Plane();
+            this._avatar = new objects.Avatar();
             this._island = new objects.Island();
+            this._cloudNumber = config.Game.CLOUD_NUM;
+            this._clouds = new Array();
+            this._weapons = new Array();
+            // create an array of cloud objects
+            for (var index = 0; index < this._cloudNumber; index++) {
+                this._clouds[index] = new objects.Cloud();
+            }
             this.Main();
         };
         Play.prototype.Update = function () {
+            var _this = this;
             this._ocean.Update();
-            this._plane.Update();
             this._island.Update();
+            this._avatar.Update();
+            //
+            managers.Collision.squaredRadiusCheck(this._avatar, this._island);
+            this._clouds.forEach(function (cloud) {
+                cloud.Update();
+                managers.Collision.squaredRadiusCheck(_this._avatar, cloud);
+            });
+            this._weapons.forEach(function (weapon) {
+                weapon.Update();
+            });
+            // alternative
+            // for (const cloud of this._clouds) {
+            // }
         };
         Play.prototype.Main = function () {
+            var _this = this;
             this.addChild(this._ocean);
             this.addChild(this._island);
-            this.addChild(this._plane);
+            this.addChild(this._avatar);
+            this._clouds.forEach(function (cloud) {
+                _this.addChild(cloud);
+            });
+            // weapon
+        };
+        //
+        Play.prototype.DetectClickEvent = function () {
+            var weapon = this._avatar.shoot();
+            this._weapons.push(weapon);
+            this.addChild(weapon);
         };
         return Play;
     }(objects.Scene));

@@ -14,41 +14,44 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var objects;
 (function (objects) {
-    var Island = /** @class */ (function (_super) {
-        __extends(Island, _super);
+    var Cloud = /** @class */ (function (_super) {
+        __extends(Cloud, _super);
         // PUBLIC PROPERTIES
         // CONSTRUCTOR
-        function Island() {
-            var _this = _super.call(this, config.Game.ASSETS.getResult("island"), new objects.Vector2(), true) || this;
+        function Cloud() {
+            var _this = _super.call(this, config.Game.ASSETS.getResult("cloud"), new objects.Vector2(), true) || this;
             _this.Start();
             return _this;
         }
         // PRIVATE METHODS
-        Island.prototype._checkBounds = function () {
+        Cloud.prototype._checkBounds = function () {
             if (this.position.y > config.Game.SCREEN_HEIGHT + this.height) {
                 this.Reset();
             }
         };
-        Island.prototype._move = function () {
+        Cloud.prototype._move = function () {
             this.position = objects.Vector2.add(this.position, this.velocity);
         };
         // PUBLIC METHODS
-        Island.prototype.Start = function () {
-            this.name = "island";
-            this._verticalSpeed = 5; // 5 px per frame
-            this.velocity = new objects.Vector2(0, this._verticalSpeed);
+        Cloud.prototype.Start = function () {
+            this.name = "cloud";
+            this.alpha = 0.5; // transparency set to 50%
             this.Reset();
         };
-        Island.prototype.Update = function () {
+        Cloud.prototype.Update = function () {
             this._move();
             this._checkBounds();
         };
-        Island.prototype.Reset = function () {
+        Cloud.prototype.Reset = function () {
+            this._verticalSpeed = util.Mathf.RandomRange(5, 10); // speed ranges from 5 to 10 px per frame
+            this._horizontalSpeed = util.Mathf.RandomRange(-2, 2); // random horizontal draft
+            this.velocity = new objects.Vector2(this._horizontalSpeed, this._verticalSpeed);
             var randomX = util.Mathf.RandomRange(this.halfWidth, config.Game.SCREEN_WIDTH - this.halfWidth);
-            this.position = new objects.Vector2(randomX, -this.height, this);
+            var randomY = util.Mathf.RandomRange(-this.height * 2, -this.height);
+            this.position = new objects.Vector2(randomX, randomY, this);
         };
-        return Island;
+        return Cloud;
     }(objects.GameObject));
-    objects.Island = Island;
+    objects.Cloud = Cloud;
 })(objects || (objects = {}));
-//# sourceMappingURL=Island.js.map
+//# sourceMappingURL=Cloud.js.map

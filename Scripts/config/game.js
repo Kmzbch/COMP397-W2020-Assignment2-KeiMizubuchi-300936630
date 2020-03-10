@@ -7,6 +7,7 @@ var config;
         Game.SCREEN_WIDTH = 640;
         Game.SCREEN_HEIGHT = 480;
         Game.FPS = 60; // 60 Frames per second
+        Game.CLOUD_NUM = 3;
         return Game;
     }());
     config.Game = Game;

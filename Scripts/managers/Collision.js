@@ -9,7 +9,15 @@ var managers;
             var radii = object1.halfHeight + object2.halfHeight;
             if (objects.Vector2.sqrDistance(object1.position, object2.position) < (radii * radii)) {
                 if (!object2.isColliding) {
-                    console.log("Collision!");
+                    switch (object2.name) {
+                        case "island":
+                            console.log("Collision with Island");
+                            break;
+                        case "cloud":
+                            console.log("Collision with Cloud");
+                            break;
+                    }
+                    // console.log("Collision!");
                     object2.isColliding = true;
                     return true;
                 }

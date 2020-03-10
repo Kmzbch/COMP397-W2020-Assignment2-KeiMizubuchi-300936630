@@ -1,13 +1,14 @@
 module objects {
-    export class Island extends GameObject {
+    export class Cloud extends GameObject {
         // PRIVATE INSTANCE MEMBERS
         private _verticalSpeed?: number;
+        private _horizontalSpeed?: number;
 
         // PUBLIC PROPERTIES
 
         // CONSTRUCTOR
         constructor() {
-            super(config.Game.ASSETS.getResult("island"), new Vector2(), true);
+            super(config.Game.ASSETS.getResult("cloud"), new Vector2(), true);
 
             this.Start();
         }
@@ -25,9 +26,10 @@ module objects {
 
         // PUBLIC METHODS
         public Start(): void {
-            this.name = "island";
-            this._verticalSpeed = 5; // 5 px per frame
-            this.velocity = new Vector2(0, this._verticalSpeed);
+            this.name = "cloud";
+
+            this.alpha = 0.5; // transparency set to 50%
+
             this.Reset();
         }
 
@@ -37,8 +39,14 @@ module objects {
         }
 
         public Reset(): void {
+            this._verticalSpeed = util.Mathf.RandomRange(5, 10); // speed ranges from 5 to 10 px per frame
+            this._horizontalSpeed = util.Mathf.RandomRange(-2, 2); // random horizontal draft
+            this.velocity = new Vector2(this._horizontalSpeed, this._verticalSpeed);
+
             let randomX = util.Mathf.RandomRange(this.halfWidth, config.Game.SCREEN_WIDTH - this.halfWidth);
-            this.position = new Vector2(randomX, -this.height, this);
+            let randomY = util.Mathf.RandomRange(-this.height * 2, -this.height);
+
+            this.position = new Vector2(randomX, randomY, this);
         }
     }
 }

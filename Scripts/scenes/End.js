@@ -45,6 +45,9 @@ var scenes;
                 config.Game.SCENE = scenes.State.PLAY;
             });
         };
+        //
+        End.prototype.DetectClickEvent = function () {
+        };
         return End;
     }(objects.Scene));
     scenes.End = End;

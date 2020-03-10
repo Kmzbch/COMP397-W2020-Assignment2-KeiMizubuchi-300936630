@@ -14,17 +14,28 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var objects;
 (function (objects) {
-    var Plane = /** @class */ (function (_super) {
-        __extends(Plane, _super);
-        // PUBLIC PROPERTIES
+    var Avatar = /** @class */ (function (_super) {
+        __extends(Avatar, _super);
         // CONSTRUCTOR
-        function Plane() {
-            var _this = _super.call(this, config.Game.ASSETS.getResult("plane"), 0, 0, true) || this;
+        function Avatar() {
+            var _this = _super.call(this, config.Game.ASSETS.getResult("avatar"), 0, 0, true) || this;
+            _this._health = 2;
             _this.Start();
             return _this;
         }
+        Object.defineProperty(Avatar.prototype, "health", {
+            // PUBLIC PROPERTIES
+            get: function () {
+                return this._health;
+            },
+            set: function (newNum) {
+                this._health = newNum;
+            },
+            enumerable: true,
+            configurable: true
+        });
         // PRIVATE METHODS
-        Plane.prototype._checkBounds = function () {
+        Avatar.prototype._checkBounds = function () {
             // left boundary
             if (this.position.x <= this.halfWidth) {
                 this.position = new objects.Vector2(this.halfWidth, this.position.y);
@@ -34,22 +45,34 @@ var objects;
                 this.position = new objects.Vector2(config.Game.SCREEN_WIDTH - this.halfWidth, this.position.y);
             }
         };
-        Plane.prototype._move = function () {
+        Avatar.prototype._move = function () {
             var newPositionX = util.Mathf.Lerp(this.position.x, this.stage.mouseX, 0.05);
             this.position = new objects.Vector2(newPositionX, this._verticalPosition);
         };
+        Avatar.prototype._checkHealth = function () {
+            if (this.health <= 0) {
+                console.log("You're already dead");
+            }
+        };
         // PUBLIC METHODS
-        Plane.prototype.Start = function () {
+        Avatar.prototype.Start = function () {
+            this.name = "avatar";
             this._verticalPosition = 430; // locked to the bottom of the screen
         };
-        Plane.prototype.Update = function () {
+        Avatar.prototype.Update = function () {
             this._move();
             this._checkBounds();
         };
-        Plane.prototype.Reset = function () {
+        Avatar.prototype.Reset = function () {
         };
-        return Plane;
+        Avatar.prototype.shoot = function () {
+            console.log("Shoot!");
+            console.log(this.x);
+            var weapon = new objects.Weapon(this.x, this.y, objects.Vector2.up());
+            return weapon;
+        };
+        return Avatar;
     }(objects.GameObject));
-    objects.Plane = Plane;
+    objects.Avatar = Avatar;
 })(objects || (objects = {}));
-//# sourceMappingURL=plane.js.map
+//# sourceMappingURL=Avatar.js.map
