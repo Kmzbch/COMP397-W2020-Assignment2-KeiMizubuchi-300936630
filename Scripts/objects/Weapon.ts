@@ -5,7 +5,7 @@ module objects {
         private _horizontalSpeed?: number;
 
         constructor(x: number, y: number, direction: Vector2 = Vector2.zero()) {
-            super(config.Game.ASSETS.getResult("placeholder"), new Vector2(x, y), true);
+            super(config.Game.ASSETS.getResult("weapon"), new Vector2(x, y), true);
 
             let speed = 10;
             direction.scale(speed);

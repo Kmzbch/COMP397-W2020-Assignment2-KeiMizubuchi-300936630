@@ -20,8 +20,12 @@ let Game = (function () {
             { id: "exitButton", src: "./Assets/images/exitButton.png" },
             { id: "nextButton", src: "./Assets/images/nextButton.png" },
             { id: "backButton", src: "./Assets/images/backButton.png" },
-            { id: "ocean", src: "./Assets/images/ocean.gif" },
+            // https://opengameart.org/content/toon-road-texture
+            { id: "ocean", src: "./Assets/images/ocean.png" },
+            // https://opengameart.org/content/top-down-pixel-police-car
             { id: "avatar", src: "./Assets/images/avatar.png" },
+            // https://opengameart.org/content/bullets-game-asset
+            { id: "weapon", src: "./Assets/images/weapon.png" },
             { id: "island", src: "./Assets/images/island.png" },
             { id: "cloud", src: "./Assets/images/cloud.png" }
 

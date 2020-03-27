@@ -57,7 +57,8 @@ var objects;
         // PUBLIC METHODS
         Avatar.prototype.Start = function () {
             this.name = "avatar";
-            this._verticalPosition = 430; // locked to the bottom of the screen
+            // this._verticalPosition = 430; // locked to the bottom of the screen
+            this._verticalPosition = 550; // locked to the bottom of the screen
         };
         Avatar.prototype.Update = function () {
             this._move();

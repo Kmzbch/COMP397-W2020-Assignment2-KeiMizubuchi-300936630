@@ -18,7 +18,7 @@ var objects;
         __extends(Weapon, _super);
         function Weapon(x, y, direction) {
             if (direction === void 0) { direction = objects.Vector2.zero(); }
-            var _this = _super.call(this, config.Game.ASSETS.getResult("placeholder"), new objects.Vector2(x, y), true) || this;
+            var _this = _super.call(this, config.Game.ASSETS.getResult("weapon"), new objects.Vector2(x, y), true) || this;
             var speed = 10;
             direction.scale(speed);
             _this.velocity = direction; // velocity = direction * speed

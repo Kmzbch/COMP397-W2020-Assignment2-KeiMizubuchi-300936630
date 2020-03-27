@@ -34,7 +34,7 @@ var objects;
         };
         // PUBLIC METHODS
         Ocean.prototype.Start = function () {
-            this._verticalSpeed = 5; // 5 px per frame
+            this._verticalSpeed = 10; // 5 px per frame
             this.velocity = new objects.Vector2(0, this._verticalSpeed);
             this.Reset();
         };
@@ -43,7 +43,7 @@ var objects;
             this._checkBounds();
         };
         Ocean.prototype.Reset = function () {
-            this.position = new objects.Vector2(0, -960);
+            this.position = new objects.Vector2(0, -874);
         };
         return Ocean;
     }(objects.GameObject));

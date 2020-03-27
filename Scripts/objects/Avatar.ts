@@ -54,7 +54,8 @@ module objects {
         public Start(): void {
             this.name = "avatar";
 
-            this._verticalPosition = 430; // locked to the bottom of the screen
+            // this._verticalPosition = 430; // locked to the bottom of the screen
+            this._verticalPosition = 550; // locked to the bottom of the screen
         }
 
         public Update(): void {
