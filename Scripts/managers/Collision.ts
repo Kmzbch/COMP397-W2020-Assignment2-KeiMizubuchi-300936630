@@ -8,9 +8,16 @@ module managers {
                 if (!object2.isColliding) {
                     switch (object2.name) {
                         case "island":
-                            console.log("Collision with Island");
+                            console.log("Collision with Hole");
+                            config.Game.LIVES = 0;
+                            let props = new createjs.PlayPropsConfig().set({ volume: 0.4 })
+                            let bgm = createjs.Sound.play("explosion", props);
+
                             break;
                         case "cloud":
+                            // if(object1.name === "weapon"){
+                            //     object2.health -= 0;
+                            // }
                             console.log("Collision with Cloud");
                             break;
                     }

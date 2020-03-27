@@ -26,7 +26,7 @@ module objects {
         // PUBLIC METHODS
         public Start(): void {
             this.name = "island";
-            this._verticalSpeed = 5; // 5 px per frame
+            this._verticalSpeed = 10; // 10 px per frame
             this.velocity = new Vector2(0, this._verticalSpeed);
             this.Reset();
         }

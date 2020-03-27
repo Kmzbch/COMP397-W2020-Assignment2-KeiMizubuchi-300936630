@@ -28,9 +28,12 @@ var scenes;
         // Initializing and Instantiating
         End.prototype.Start = function () {
             //instantiate a new Text object
-            this._endLabel = new objects.Label("End Scene", "80px", "Consolas", "#FFFF00", 320, 180, true);
+            this._endLabel = new objects.Label("GAME OVER", "80px", "Consolas", "#FFFF00", 320, 180, true);
             // buttons
             this._backButton = new objects.Button(config.Game.ASSETS.getResult("backButton"), 320, 430, true);
+            this._exitToMenuButton = new objects.Button(config.Game.ASSETS.getResult("backButton"), 320, 530, true);
+            this._scoreLabel = new objects.Label("SCORE: " + config.Game.SCORE.toString(), "24px", "Consolas", "#FFFF00", 320, 250, true);
+            this._highScoreLabel = new objects.Label("HIGH SCORE: " + config.Game.HIGH_SCORE.toString(), "24px", "Consolas", "#FFFF00", 320, 300, true);
             this._ocean = new objects.Ocean();
             this.Main();
         };
@@ -40,9 +43,21 @@ var scenes;
         End.prototype.Main = function () {
             this.addChild(this._ocean);
             this.addChild(this._endLabel);
+            this.addChild(this._scoreLabel);
+            this.addChild(this._highScoreLabel);
             this.addChild(this._backButton);
+            this.addChild(this._exitToMenuButton);
             this._backButton.on("click", function () {
+                var bgm = createjs.Sound.stop();
+                config.Game.LIVES = 5;
+                config.Game.SCORE = 0;
                 config.Game.SCENE = scenes.State.PLAY;
+            });
+            this._exitToMenuButton.on("click", function () {
+                var bgm = createjs.Sound.stop();
+                config.Game.LIVES = 5;
+                config.Game.SCORE = 0;
+                config.Game.SCENE = scenes.State.Menu;
             });
         };
         //

@@ -38,8 +38,12 @@ module objects {
         }
 
         private _move(): void {
+            // let newPositionX = util.Mathf.Lerp(this.position.x, this.stage.mouseX, 0.05);
+            // this.position = new Vector2(newPositionX, this._verticalPosition);
             let newPositionX = util.Mathf.Lerp(this.position.x, this.stage.mouseX, 0.05);
-            this.position = new Vector2(newPositionX, this._verticalPosition);
+            let newPositionY = util.Mathf.Lerp(this.position.y, this.stage.mouseY, 0.05);
+            this.position = new Vector2(newPositionX, newPositionY);
+
         }
 
 

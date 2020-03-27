@@ -19,6 +19,8 @@ var objects;
         function Weapon(x, y, direction) {
             if (direction === void 0) { direction = objects.Vector2.zero(); }
             var _this = _super.call(this, config.Game.ASSETS.getResult("weapon"), new objects.Vector2(x, y), true) || this;
+            var props = new createjs.PlayPropsConfig().set({ volume: 1.5 });
+            var bgm = createjs.Sound.play("shot", props);
             var speed = 10;
             direction.scale(speed);
             _this.velocity = direction; // velocity = direction * speed

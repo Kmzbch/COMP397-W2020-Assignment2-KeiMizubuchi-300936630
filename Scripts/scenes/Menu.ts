@@ -22,7 +22,7 @@ module scenes {
         // PUBLIC METHODS
         public Start(): void {
             // instantiate a new Text object
-            this._gameTitle = new objects.Label("Game Title Here", "80px", "Consolas", "#FFFF00", 320, 180, true);
+            this._gameTitle = new objects.Label("The Reckless", "80px", "Consolas", "#FFFF00", 320, 180, true);
 
             // buttons
             this._playButton = new objects.Button(config.Game.ASSETS.getResult("playButton"), 320, 330, true);
@@ -39,6 +39,7 @@ module scenes {
         }
 
         public Main(): void {
+
             this.addChild(this._ocean);
 
             this.addChild(this._gameTitle);

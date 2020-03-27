@@ -18,6 +18,7 @@ module objects {
             if (this.y >= 0) {
                 this.Reset();
             }
+
         }
 
         private _move(): void {
@@ -26,7 +27,7 @@ module objects {
 
         // PUBLIC METHODS
         public Start(): void {
-            this._verticalSpeed = 10; // 5 px per frame
+            this._verticalSpeed = 10; // 10 px per frame
             this.velocity = new Vector2(0, this._verticalSpeed);
             this.Reset();
         }

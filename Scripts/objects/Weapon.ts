@@ -7,6 +7,9 @@ module objects {
         constructor(x: number, y: number, direction: Vector2 = Vector2.zero()) {
             super(config.Game.ASSETS.getResult("weapon"), new Vector2(x, y), true);
 
+            let props = new createjs.PlayPropsConfig().set({ volume: 1.5 })
+            let bgm = createjs.Sound.play("shot", props);
+
             let speed = 10;
             direction.scale(speed);
             this.velocity = direction; // velocity = direction * speed

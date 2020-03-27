@@ -46,8 +46,11 @@ var objects;
             }
         };
         Avatar.prototype._move = function () {
+            // let newPositionX = util.Mathf.Lerp(this.position.x, this.stage.mouseX, 0.05);
+            // this.position = new Vector2(newPositionX, this._verticalPosition);
             var newPositionX = util.Mathf.Lerp(this.position.x, this.stage.mouseX, 0.05);
-            this.position = new objects.Vector2(newPositionX, this._verticalPosition);
+            var newPositionY = util.Mathf.Lerp(this.position.y, this.stage.mouseY, 0.05);
+            this.position = new objects.Vector2(newPositionX, newPositionY);
         };
         Avatar.prototype._checkHealth = function () {
             if (this.health <= 0) {
