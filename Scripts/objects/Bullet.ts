@@ -1,11 +1,11 @@
 module objects {
-    export class Weapon extends GameObject {
+    export class Bullet extends GameObject {
 
         private _verticalSpeed?: number;
         private _horizontalSpeed?: number;
 
         constructor(x: number, y: number, direction: Vector2 = Vector2.zero()) {
-            super(config.Game.ASSETS.getResult("weapon"), new Vector2(x, y), true);
+            super(config.Game.ASSETS.getResult("bullet"), new Vector2(x, y), true);
 
             let props = new createjs.PlayPropsConfig().set({ volume: 1.5 })
             let bgm = createjs.Sound.play("shot", props);
@@ -31,7 +31,7 @@ module objects {
 
         // PUBLIC METHODS
         public Start(): void {
-            this.name = "weapon";
+            this.name = "bullet";
 
             this.Reset();
         }

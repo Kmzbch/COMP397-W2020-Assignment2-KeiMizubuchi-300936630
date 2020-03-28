@@ -31,14 +31,14 @@ var scenes;
             this._instructionLabel = new objects.Label(text, "10px", "Consolas", "#FFFF00", 320, 180, true);
             // buttons
             this._backButton = new objects.Button(config.Game.ASSETS.getResult("backButton"), 320, 330, true);
-            this._ocean = new objects.Ocean();
+            this._road = new objects.Road();
             this.Main();
         };
         Instructions.prototype.Update = function () {
-            this._ocean.Update();
+            this._road.Update();
         };
         Instructions.prototype.Main = function () {
-            this.addChild(this._ocean);
+            this.addChild(this._road);
             this.addChild(this._instructionLabel);
             this.addChild(this._backButton);
             this._backButton.on("click", function () {

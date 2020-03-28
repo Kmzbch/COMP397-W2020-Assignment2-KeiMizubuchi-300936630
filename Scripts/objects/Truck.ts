@@ -1,5 +1,5 @@
 module objects {
-    export class Cloud extends GameObject {
+    export class Truck extends GameObject {
         // PRIVATE INSTANCE MEMBERS
         private _verticalSpeed?: number;
         private _horizontalSpeed?: number;
@@ -30,7 +30,7 @@ module objects {
 
         // CONSTRUCTOR
         constructor() {
-            super(config.Game.ASSETS.getResult("cloud"), new Vector2(), true);
+            super(config.Game.ASSETS.getResult("truck"), new Vector2(), true);
 
             this._health = 3;
 
@@ -63,7 +63,7 @@ module objects {
 
         // PUBLIC METHODS
         public Start(): void {
-            this.name = "cloud";
+            this.name = "truck";
 
             //            this.alpha = 0.5; // transparency set to 50%
 

@@ -7,7 +7,7 @@ module scenes {
 
         private _exitToMenuButton: objects.Button;
         private _backButton: objects.Button;
-        private _ocean: objects.Ocean;
+        private _road: objects.Road;
 
         // PUBLIC PROPERTIES
 
@@ -36,18 +36,18 @@ module scenes {
             this._highScoreLabel = new objects.Label("HIGH SCORE: " + config.Game.HIGH_SCORE.toString(), "24px", "Consolas", "#FFFF00", 320, 300, true);
 
 
-            this._ocean = new objects.Ocean();
+            this._road = new objects.Road();
 
 
             this.Main();
         }
 
         public Update(): void {
-            this._ocean.Update();
+            this._road.Update();
         }
 
         public Main(): void {
-            this.addChild(this._ocean);
+            this.addChild(this._road);
 
             this.addChild(this._endLabel);
 

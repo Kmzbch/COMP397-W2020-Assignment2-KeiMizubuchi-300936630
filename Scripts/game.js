@@ -17,15 +17,15 @@ var Game = (function () {
         { id: "nextButton", src: "./Assets/images/nextButton.png" },
         { id: "backButton", src: "./Assets/images/backButton.png" },
         // https://opengameart.org/content/toon-road-texture
-        { id: "ocean", src: "./Assets/images/ocean.png" },
+        { id: "road", src: "./Assets/images/road.png" },
         // https://opengameart.org/content/top-down-pixel-police-car
-        { id: "avatar", src: "./Assets/images/avatar.png" },
+        { id: "policeCar", src: "./Assets/images/policeCar.png" },
         // https://opengameart.org/content/bullets-game-asset
-        { id: "weapon", src: "./Assets/images/weapon.png" },
+        { id: "bullet", src: "./Assets/images/bullet.png" },
         // https://flyclipart.com/crack-hole-png-png-image-hole-png-864547#
-        { id: "island", src: "./Assets/images/island.png" },
+        { id: "hole", src: "./Assets/images/hole.png" },
         //            https://opengameart.org/content/top-view-car-truck-sprites
-        { id: "cloud", src: "./Assets/images/cloud.png" },
+        { id: "truck", src: "./Assets/images/truck.png" },
         // Sound
         // https://freemusicarchive.org/music/Komiku/Captain_Glouglous_Incredible_Week_Soundtrack/pog
         { id: "bgm", src: "./Assets/audio/bgm.mp3" },
@@ -37,6 +37,12 @@ var Game = (function () {
         { id: "explosion", src: "./Assets/audio/explosion.mp3" },
         // https://freesound.org/people/broumbroum/sounds/50549/
         { id: "hit", src: "./Assets/audio/hit.wav" },
+        // https://freesound.org/people/Juandamb/sounds/430626/
+        { id: "spin", src: "./Assets/audio/spin.wav" },
+        // https://opengameart.org/content/heart-2
+        { id: "heart", src: "./Assets/images/heart.png" },
+        // https://freesound.org/people/Scrampunk/sounds/345297/
+        { id: "lifeup", src: "./Assets/audio/lifeup.wav" },
     ];
     //https://opengameart.org/content/c64-style-racing-game
     function Preload() {

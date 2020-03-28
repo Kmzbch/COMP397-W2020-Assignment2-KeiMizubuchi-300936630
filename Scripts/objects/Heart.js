@@ -14,39 +14,41 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var objects;
 (function (objects) {
-    var Ocean = /** @class */ (function (_super) {
-        __extends(Ocean, _super);
+    var Heart = /** @class */ (function (_super) {
+        __extends(Heart, _super);
         // PUBLIC PROPERTIES
         // CONSTRUCTOR
-        function Ocean() {
-            var _this = _super.call(this, config.Game.ASSETS.getResult("ocean")) || this;
+        function Heart() {
+            var _this = _super.call(this, config.Game.ASSETS.getResult("heart"), new objects.Vector2(), true) || this;
             _this.Start();
             return _this;
         }
         // PRIVATE METHODS
-        Ocean.prototype._checkBounds = function () {
-            if (this.y >= 0) {
+        Heart.prototype._checkBounds = function () {
+            if (this.position.y > config.Game.SCREEN_HEIGHT + this.height + 1800) {
                 this.Reset();
             }
         };
-        Ocean.prototype._move = function () {
+        Heart.prototype._move = function () {
             this.position = objects.Vector2.add(this.position, this.velocity);
         };
         // PUBLIC METHODS
-        Ocean.prototype.Start = function () {
+        Heart.prototype.Start = function () {
+            this.name = "heart";
             this._verticalSpeed = 10; // 10 px per frame
             this.velocity = new objects.Vector2(0, this._verticalSpeed);
             this.Reset();
         };
-        Ocean.prototype.Update = function () {
+        Heart.prototype.Update = function () {
             this._move();
             this._checkBounds();
         };
-        Ocean.prototype.Reset = function () {
-            this.position = new objects.Vector2(0, -874);
+        Heart.prototype.Reset = function () {
+            var randomX = util.Mathf.RandomRange(this.halfWidth, config.Game.SCREEN_WIDTH - this.halfWidth);
+            this.position = new objects.Vector2(randomX, -1800, this);
         };
-        return Ocean;
+        return Heart;
     }(objects.GameObject));
-    objects.Ocean = Ocean;
+    objects.Heart = Heart;
 })(objects || (objects = {}));
-//# sourceMappingURL=Ocean.js.map
+//# sourceMappingURL=Heart.js.map

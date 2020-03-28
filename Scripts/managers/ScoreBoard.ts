@@ -36,6 +36,11 @@ module managers {
         }
         public set Lives(v: number) {
             this._lives = v;
+            if (this._lives <= 1) {
+                this.LivesLabel.color = "#FF0000";
+            } else {
+                this.LivesLabel.color = "#FFFF00";
+            }
             config.Game.LIVES = this._lives;
             this.LivesLabel.text = "Lives: " + this._lives;
         }

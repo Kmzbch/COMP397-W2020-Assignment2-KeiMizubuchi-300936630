@@ -1,12 +1,20 @@
 module objects {
-    export class Avatar extends GameObject {
+    export class PoliceCar extends GameObject {
         // PRIVATE INSTANCE MEMBERS
         private _verticalPosition: number;
 
         private _health: number = 2;
+        private _isRotating: boolean = false;
 
         // PUBLIC PROPERTIES
 
+        get isRotating(): boolean {
+            return this._isRotating;
+        }
+
+        set isRotating(newState: boolean) {
+            this._isRotating = newState;
+        }
 
         get health(): number {
             return this._health;
@@ -18,7 +26,7 @@ module objects {
 
         // CONSTRUCTOR
         constructor() {
-            super(config.Game.ASSETS.getResult("avatar"), 0, 0, true);
+            super(config.Game.ASSETS.getResult("policeCar"), 0, 0, true);
 
             this.Start();
         }
@@ -45,6 +53,21 @@ module objects {
             this.position = new Vector2(newPositionX, newPositionY);
 
         }
+        private _spin(): void {
+            // let newPositionX = util.Mathf.Lerp(this.position.x, this.stage.mouseX, 0.05);
+            // this.position = new Vector2(newPositionX, this._verticalPosition);
+            // if (createjs.Ticker.getTicks() % 4 == 0) {
+            //     this.position = Vector2.add(this.position, new Vector2(-5, -5));
+            // } else if (createjs.Ticker.getTicks() % 4 == 1) {
+            //     this.position = Vector2.add(this.position, new Vector2(-5, 5));
+            // } else if (createjs.Ticker.getTicks() % 4 == 2) {
+            //     this.position = Vector2.add(this.position, new Vector2(5, -5));
+            // } else if (createjs.Ticker.getTicks() % 4 == 3) {
+            //     this.position = Vector2.add(this.position, new Vector2(5, 5));
+            // }
+            this.position = Vector2.add(this.position, new Vector2(-5, -5));
+
+        }
 
 
         private _checkHealth(): void {
@@ -56,14 +79,19 @@ module objects {
 
         // PUBLIC METHODS
         public Start(): void {
-            this.name = "avatar";
+            this.name = "policeCar";
 
             // this._verticalPosition = 430; // locked to the bottom of the screen
             this._verticalPosition = 550; // locked to the bottom of the screen
         }
 
         public Update(): void {
-            this._move();
+            if (this._isRotating) {
+                this.rotation += 10;
+                this._spin();
+            } else {
+                this._move();
+            }
             this._checkBounds();
         }
 
@@ -74,8 +102,8 @@ module objects {
         public shoot() {
             console.log("Shoot!");
             console.log(this.x);
-            let weapon = new Weapon(this.x, this.y, Vector2.up());
-            return weapon;
+            let bullet = new Bullet(this.x, this.y, Vector2.up());
+            return bullet;
         }
         // public shoot(imagePath: string, aim: Vector2): objects.Bullet | null {
         //     // check if this player still have bullet or not

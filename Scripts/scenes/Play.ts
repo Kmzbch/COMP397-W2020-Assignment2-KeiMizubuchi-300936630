@@ -1,19 +1,20 @@
 module scenes {
     export class Play extends objects.Scene {
         // PRIVATE INSTANCE MEMBERS
-        private _ocean?: objects.Ocean;
-        private _avatar?: objects.Avatar;
-        private _island?: objects.Island;
+        private __road?: objects.Road;
+        private _policeCar?: objects.PoliceCar;
+        private _hole?: objects.Hole;
 
-        // private _cloud?: objects.Cloud;
-        private _cloudNumber: number;
-        private _clouds?: objects.Cloud[];
+        private _truckNumber: number;
+        private _trucks?: objects.Truck[];
 
-        private _weapons?: objects.Weapon[];
+        private bullets?: objects.Bullet[];
 
         private _scoreBoard: managers.ScoreBoard;
 
         private _vulnerableCount: number = 300;
+
+        private _heart: objects.Heart;
 
         // PUBLIC PROPERTIES
         public keyPressedStates: boolean[]; // to detect which keys are down
@@ -41,18 +42,20 @@ module scenes {
 
 
 
-            this._ocean = new objects.Ocean();
-            this._avatar = new objects.Avatar();
-            this._island = new objects.Island();
+            this.__road = new objects.Road();
+            this._policeCar = new objects.PoliceCar();
+            this._hole = new objects.Hole();
 
-            this._cloudNumber = config.Game.CLOUD_NUM;
-            this._clouds = new Array<objects.Cloud>();
+            this._truckNumber = config.Game.TRUCK_NUM;
+            this._trucks = new Array<objects.Truck>();
 
-            this._weapons = new Array<objects.Weapon>();
+            this._heart = new objects.Heart();
+            console.log(this._heart);
 
-            // create an array of cloud objects
-            for (let index = 0; index < this._cloudNumber; index++) {
-                this._clouds[index] = new objects.Cloud();
+            this.bullets = new Array<objects.Bullet>();
+
+            for (let index = 0; index < this._truckNumber; index++) {
+                this._trucks[index] = new objects.Truck();
             }
 
             this._scoreBoard = new managers.ScoreBoard();
@@ -77,69 +80,91 @@ module scenes {
                 }
             }
 
-            this._ocean.Update();
+            this.__road.Update();
 
-            this._island.Update();
+            this._hole.Update();
 
-            this._avatar.Update();
+            this._policeCar.Update();
+
+            this._heart.Update();
+
+
+            managers.Collision.squaredRadiusCheck(this._policeCar, this._heart);
+            if (this._heart.isColliding) {
+                let props = new createjs.PlayPropsConfig().set({ volume: 0.4 })
+                let bgm = createjs.Sound.play("lifeup", props);
+
+                config.Game.SCORE_BOARD.Lives += 1;
+                this._heart.Reset();
+            }
 
             //
-            managers.Collision.squaredRadiusCheck(this._avatar, this._island);
+            managers.Collision.squaredRadiusCheck(this._policeCar, this._hole);
+            this._vulnerableCount += 1;
+            if (this._hole.isColliding) {
+                if (this._vulnerableCount > 300) {
+                    // let props = new createjs.PlayPropsConfig().set({ volume: 0.4 })
+                    // let bgm = createjs.Sound.play("hit", props);
+                    let props = new createjs.PlayPropsConfig().set({ volume: 0.4 })
+                    let bgm = createjs.Sound.play("spin", props);
+
+                    this._vulnerableCount = 0;
+                    //                    config.Game.SCORE_BOARD.Lives -= 1;
+                    this._policeCar.isRotating = true;
+                    this._policeCar.velocity = new objects.Vector2(-this._policeCar.velocity.x * 6, -2);
+                }
+            }
+            if (this._vulnerableCount > 120) {
+                this._policeCar.isRotating = false;
+                this._policeCar.rotation = 0;
+            }
 
 
-
-            this._clouds.forEach(cloud => {
-                if (cloud.health <= 0) {
+            this._trucks.forEach(t => {
+                if (t.health <= 0) {
                     let props = new createjs.PlayPropsConfig().set({ volume: 0.4 })
                     let bgm = createjs.Sound.play("explosion", props);
 
-                    // this.removeChild(cloud);
-                    // this._clouds.splice(this._clouds.indexOf(cloud), 1); // remove the bullet from the list
 
-                    cloud.health = 3;
-                    cloud.Reset();
+                    t.health = 3;
+                    t.Reset();
 
                     config.Game.SCORE_BOARD.Score += 100;
                     config.Game.SCORE = config.Game.SCORE;
                     config.Game.HIGH_SCORE = config.Game.SCORE;
                     //                    config.Game.SCORE_BOARD
                 }
-                cloud.Update();
+                t.Update();
 
 
-                managers.Collision.squaredRadiusCheck(this._avatar, cloud);
+                managers.Collision.squaredRadiusCheck(this._policeCar, t);
 
                 this._vulnerableCount += 1;
-                if (cloud.isColliding) {
+                if (t.isColliding) {
                     if (this._vulnerableCount > 300) {
                         let props = new createjs.PlayPropsConfig().set({ volume: 0.4 })
                         let bgm = createjs.Sound.play("hit", props);
 
                         this._vulnerableCount = 0;
                         config.Game.SCORE_BOARD.Lives -= 1;
-                        cloud.isRotating = true;
-                        cloud.velocity = new objects.Vector2(-cloud.velocity.x * 6, -2);
+                        t.isRotating = true;
+                        t.velocity = new objects.Vector2(-t.velocity.x * 6, -2);
                     }
                 }
             });
 
-            this._weapons.forEach(weapon => {
-                weapon.Update();
-                this._clouds.forEach(c => {
-                    managers.Collision.squaredRadiusCheck(weapon, c);
+            this.bullets.forEach(b => {
+                b.Update();
+                this._trucks.forEach(c => {
+                    managers.Collision.squaredRadiusCheck(b, c);
                     if (c.isColliding) {
                         console.log(c.health);
                         c.health -= 1;
-                        this.removeChild(weapon);
-                        this._weapons.splice(this._weapons.indexOf(weapon), 1); // remove the bullet from the list
+                        this.removeChild(b);
+                        this.bullets.splice(this.bullets.indexOf(b), 1); // remove the bullet from the list
                     }
                 })
             })
-
-            // alternative
-            // for (const cloud of this._clouds) {
-
-            // }
 
             this.addChild(this._scoreBoard.LivesLabel);
             this.addChild(this._scoreBoard.ScoreLabel);
@@ -156,17 +181,18 @@ module scenes {
         }
 
         public Main(): void {
-            this.addChild(this._ocean);
+            this.addChild(this.__road);
 
-            this.addChild(this._island);
+            this.addChild(this._hole);
 
-            this.addChild(this._avatar);
+            this.addChild(this._policeCar);
 
-            this._clouds.forEach(cloud => {
-                this.addChild(cloud);
+            this._trucks.forEach(t => {
+                this.addChild(t);
             });
 
 
+            this.addChild(this._heart);
         }
 
         public Clean(): void {
@@ -176,9 +202,9 @@ module scenes {
 
         //
         public DetectClickEvent(): void {
-            let weapon = this._avatar.shoot();
-            this._weapons.push(weapon);
-            this.addChild(weapon);
+            let bullet = this._policeCar.shoot();
+            this.bullets.push(bullet);
+            this.addChild(bullet);
         }
 
     }

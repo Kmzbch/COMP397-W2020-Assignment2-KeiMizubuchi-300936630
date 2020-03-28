@@ -34,14 +34,14 @@ var scenes;
             this._exitToMenuButton = new objects.Button(config.Game.ASSETS.getResult("backButton"), 320, 530, true);
             this._scoreLabel = new objects.Label("SCORE: " + config.Game.SCORE.toString(), "24px", "Consolas", "#FFFF00", 320, 250, true);
             this._highScoreLabel = new objects.Label("HIGH SCORE: " + config.Game.HIGH_SCORE.toString(), "24px", "Consolas", "#FFFF00", 320, 300, true);
-            this._ocean = new objects.Ocean();
+            this._road = new objects.Road();
             this.Main();
         };
         End.prototype.Update = function () {
-            this._ocean.Update();
+            this._road.Update();
         };
         End.prototype.Main = function () {
-            this.addChild(this._ocean);
+            this.addChild(this._road);
             this.addChild(this._endLabel);
             this.addChild(this._scoreLabel);
             this.addChild(this._highScoreLabel);

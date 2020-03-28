@@ -14,18 +14,18 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var objects;
 (function (objects) {
-    var Cloud = /** @class */ (function (_super) {
-        __extends(Cloud, _super);
+    var Truck = /** @class */ (function (_super) {
+        __extends(Truck, _super);
         // CONSTRUCTOR
-        function Cloud() {
-            var _this = _super.call(this, config.Game.ASSETS.getResult("cloud"), new objects.Vector2(), true) || this;
+        function Truck() {
+            var _this = _super.call(this, config.Game.ASSETS.getResult("truck"), new objects.Vector2(), true) || this;
             _this._isRotating = false;
             _this._health = 3;
             _this._health = 3;
             _this.Start();
             return _this;
         }
-        Object.defineProperty(Cloud.prototype, "health", {
+        Object.defineProperty(Truck.prototype, "health", {
             // PUBLIC PROPERTIES
             get: function () {
                 return this._health;
@@ -36,7 +36,7 @@ var objects;
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(Cloud.prototype, "isRotating", {
+        Object.defineProperty(Truck.prototype, "isRotating", {
             get: function () {
                 return this._isRotating;
             },
@@ -47,7 +47,7 @@ var objects;
             configurable: true
         });
         // PRIVATE METHODS
-        Cloud.prototype._checkBounds = function () {
+        Truck.prototype._checkBounds = function () {
             if (this.position.y > config.Game.SCREEN_HEIGHT + this.height) {
                 this.Reset();
             }
@@ -61,23 +61,23 @@ var objects;
                 this.Reset();
             }
         };
-        Cloud.prototype._move = function () {
+        Truck.prototype._move = function () {
             this.position = objects.Vector2.add(this.position, this.velocity);
         };
         // PUBLIC METHODS
-        Cloud.prototype.Start = function () {
-            this.name = "cloud";
+        Truck.prototype.Start = function () {
+            this.name = "truck";
             //            this.alpha = 0.5; // transparency set to 50%
             this.Reset();
         };
-        Cloud.prototype.Update = function () {
+        Truck.prototype.Update = function () {
             this._move();
             if (this._isRotating) {
                 this.rotation += 10;
             }
             this._checkBounds();
         };
-        Cloud.prototype.Reset = function () {
+        Truck.prototype.Reset = function () {
             this.isRotating = false;
             this.rotation = 0;
             // this._verticalSpeed = util.Mathf.RandomRange(5, 10); // speed ranges from 5 to 10 px per frame
@@ -89,8 +89,8 @@ var objects;
             var randomY = util.Mathf.RandomRange(-this.height * 2, -this.height);
             this.position = new objects.Vector2(randomX, randomY, this);
         };
-        return Cloud;
+        return Truck;
     }(objects.GameObject));
-    objects.Cloud = Cloud;
+    objects.Truck = Truck;
 })(objects || (objects = {}));
-//# sourceMappingURL=Cloud.js.map
+//# sourceMappingURL=Truck.js.map

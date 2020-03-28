@@ -31,15 +31,16 @@ var scenes;
             var bgm = createjs.Sound.play("bgm", props);
             this._scoreBoard = new managers.ScoreBoard();
             config.Game.SCORE_BOARD = this._scoreBoard;
-            this._ocean = new objects.Ocean();
-            this._avatar = new objects.Avatar();
-            this._island = new objects.Island();
-            this._cloudNumber = config.Game.CLOUD_NUM;
-            this._clouds = new Array();
-            this._weapons = new Array();
-            // create an array of cloud objects
-            for (var index = 0; index < this._cloudNumber; index++) {
-                this._clouds[index] = new objects.Cloud();
+            this.__road = new objects.Road();
+            this._policeCar = new objects.PoliceCar();
+            this._hole = new objects.Hole();
+            this._truckNumber = config.Game.TRUCK_NUM;
+            this._trucks = new Array();
+            this._heart = new objects.Heart();
+            console.log(this._heart);
+            this.bullets = new Array();
+            for (var index = 0; index < this._truckNumber; index++) {
+                this._trucks[index] = new objects.Truck();
             }
             this._scoreBoard = new managers.ScoreBoard();
             config.Game.SCORE_BOARD = this._scoreBoard;
@@ -58,53 +59,73 @@ var scenes;
                     config.Game.HIGH_SCORE = config.Game.SCORE;
                 }
             }
-            this._ocean.Update();
-            this._island.Update();
-            this._avatar.Update();
+            this.__road.Update();
+            this._hole.Update();
+            this._policeCar.Update();
+            this._heart.Update();
+            managers.Collision.squaredRadiusCheck(this._policeCar, this._heart);
+            if (this._heart.isColliding) {
+                var props = new createjs.PlayPropsConfig().set({ volume: 0.4 });
+                var bgm = createjs.Sound.play("lifeup", props);
+                config.Game.SCORE_BOARD.Lives += 1;
+                this._heart.Reset();
+            }
             //
-            managers.Collision.squaredRadiusCheck(this._avatar, this._island);
-            this._clouds.forEach(function (cloud) {
-                if (cloud.health <= 0) {
+            managers.Collision.squaredRadiusCheck(this._policeCar, this._hole);
+            this._vulnerableCount += 1;
+            if (this._hole.isColliding) {
+                if (this._vulnerableCount > 300) {
+                    // let props = new createjs.PlayPropsConfig().set({ volume: 0.4 })
+                    // let bgm = createjs.Sound.play("hit", props);
+                    var props = new createjs.PlayPropsConfig().set({ volume: 0.4 });
+                    var bgm = createjs.Sound.play("spin", props);
+                    this._vulnerableCount = 0;
+                    //                    config.Game.SCORE_BOARD.Lives -= 1;
+                    this._policeCar.isRotating = true;
+                    this._policeCar.velocity = new objects.Vector2(-this._policeCar.velocity.x * 6, -2);
+                }
+            }
+            if (this._vulnerableCount > 120) {
+                this._policeCar.isRotating = false;
+                this._policeCar.rotation = 0;
+            }
+            this._trucks.forEach(function (t) {
+                if (t.health <= 0) {
                     var props = new createjs.PlayPropsConfig().set({ volume: 0.4 });
                     var bgm = createjs.Sound.play("explosion", props);
-                    // this.removeChild(cloud);
-                    // this._clouds.splice(this._clouds.indexOf(cloud), 1); // remove the bullet from the list
-                    cloud.health = 3;
-                    cloud.Reset();
+                    t.health = 3;
+                    t.Reset();
                     config.Game.SCORE_BOARD.Score += 100;
                     config.Game.SCORE = config.Game.SCORE;
                     config.Game.HIGH_SCORE = config.Game.SCORE;
                     //                    config.Game.SCORE_BOARD
                 }
-                cloud.Update();
-                managers.Collision.squaredRadiusCheck(_this._avatar, cloud);
+                t.Update();
+                managers.Collision.squaredRadiusCheck(_this._policeCar, t);
                 _this._vulnerableCount += 1;
-                if (cloud.isColliding) {
+                if (t.isColliding) {
                     if (_this._vulnerableCount > 300) {
                         var props = new createjs.PlayPropsConfig().set({ volume: 0.4 });
                         var bgm = createjs.Sound.play("hit", props);
                         _this._vulnerableCount = 0;
                         config.Game.SCORE_BOARD.Lives -= 1;
-                        cloud.isRotating = true;
-                        cloud.velocity = new objects.Vector2(-cloud.velocity.x * 6, -2);
+                        t.isRotating = true;
+                        t.velocity = new objects.Vector2(-t.velocity.x * 6, -2);
                     }
                 }
             });
-            this._weapons.forEach(function (weapon) {
-                weapon.Update();
-                _this._clouds.forEach(function (c) {
-                    managers.Collision.squaredRadiusCheck(weapon, c);
+            this.bullets.forEach(function (b) {
+                b.Update();
+                _this._trucks.forEach(function (c) {
+                    managers.Collision.squaredRadiusCheck(b, c);
                     if (c.isColliding) {
                         console.log(c.health);
                         c.health -= 1;
-                        _this.removeChild(weapon);
-                        _this._weapons.splice(_this._weapons.indexOf(weapon), 1); // remove the bullet from the list
+                        _this.removeChild(b);
+                        _this.bullets.splice(_this.bullets.indexOf(b), 1); // remove the bullet from the list
                     }
                 });
             });
-            // alternative
-            // for (const cloud of this._clouds) {
-            // }
             this.addChild(this._scoreBoard.LivesLabel);
             this.addChild(this._scoreBoard.ScoreLabel);
             // detect player lives
@@ -117,21 +138,22 @@ var scenes;
         };
         Play.prototype.Main = function () {
             var _this = this;
-            this.addChild(this._ocean);
-            this.addChild(this._island);
-            this.addChild(this._avatar);
-            this._clouds.forEach(function (cloud) {
-                _this.addChild(cloud);
+            this.addChild(this.__road);
+            this.addChild(this._hole);
+            this.addChild(this._policeCar);
+            this._trucks.forEach(function (t) {
+                _this.addChild(t);
             });
+            this.addChild(this._heart);
         };
         Play.prototype.Clean = function () {
             this.removeAllChildren();
         };
         //
         Play.prototype.DetectClickEvent = function () {
-            var weapon = this._avatar.shoot();
-            this._weapons.push(weapon);
-            this.addChild(weapon);
+            var bullet = this._policeCar.shoot();
+            this.bullets.push(bullet);
+            this.addChild(bullet);
         };
         return Play;
     }(objects.Scene));

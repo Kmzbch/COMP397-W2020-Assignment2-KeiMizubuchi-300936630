@@ -1,5 +1,5 @@
 module objects {
-    export class Island extends GameObject {
+    export class Road extends GameObject {
         // PRIVATE INSTANCE MEMBERS
         private _verticalSpeed?: number;
 
@@ -7,16 +7,18 @@ module objects {
 
         // CONSTRUCTOR
         constructor() {
-            super(config.Game.ASSETS.getResult("island"), new Vector2(), true);
+            super(config.Game.ASSETS.getResult("road"));
 
             this.Start();
         }
 
         // PRIVATE METHODS
+
         protected _checkBounds(): void {
-            if (this.position.y > config.Game.SCREEN_HEIGHT + this.height) {
+            if (this.y >= 0) {
                 this.Reset();
             }
+
         }
 
         private _move(): void {
@@ -25,7 +27,6 @@ module objects {
 
         // PUBLIC METHODS
         public Start(): void {
-            this.name = "island";
             this._verticalSpeed = 10; // 10 px per frame
             this.velocity = new Vector2(0, this._verticalSpeed);
             this.Reset();
@@ -37,8 +38,9 @@ module objects {
         }
 
         public Reset(): void {
-            let randomX = util.Mathf.RandomRange(this.halfWidth, config.Game.SCREEN_WIDTH - this.halfWidth);
-            this.position = new Vector2(randomX, -this.height, this);
+            this.position = new Vector2(0, -874);
         }
+
+
     }
 }

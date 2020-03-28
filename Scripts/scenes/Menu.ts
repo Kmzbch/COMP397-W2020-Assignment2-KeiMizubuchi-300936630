@@ -6,7 +6,7 @@ module scenes {
         private _instructionsButton: objects.Button;
         private _exitButton: objects.Button;
 
-        private _ocean: objects.Ocean;
+        private _road: objects.Road;
 
         // PUBLIC PROPERTIES
 
@@ -30,17 +30,17 @@ module scenes {
             this._exitButton = new objects.Button(config.Game.ASSETS.getResult("exitButton"), 320, 430, true);
 
 
-            this._ocean = new objects.Ocean();
+            this._road = new objects.Road();
             this.Main();
         }
 
         public Update(): void {
-            this._ocean.Update();
+            this._road.Update();
         }
 
         public Main(): void {
 
-            this.addChild(this._ocean);
+            this.addChild(this._road);
 
             this.addChild(this._gameTitle);
 

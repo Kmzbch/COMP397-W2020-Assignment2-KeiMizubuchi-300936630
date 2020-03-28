@@ -14,17 +14,28 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var objects;
 (function (objects) {
-    var Avatar = /** @class */ (function (_super) {
-        __extends(Avatar, _super);
+    var PoliceCar = /** @class */ (function (_super) {
+        __extends(PoliceCar, _super);
         // CONSTRUCTOR
-        function Avatar() {
-            var _this = _super.call(this, config.Game.ASSETS.getResult("avatar"), 0, 0, true) || this;
+        function PoliceCar() {
+            var _this = _super.call(this, config.Game.ASSETS.getResult("policeCar"), 0, 0, true) || this;
             _this._health = 2;
+            _this._isRotating = false;
             _this.Start();
             return _this;
         }
-        Object.defineProperty(Avatar.prototype, "health", {
+        Object.defineProperty(PoliceCar.prototype, "isRotating", {
             // PUBLIC PROPERTIES
+            get: function () {
+                return this._isRotating;
+            },
+            set: function (newState) {
+                this._isRotating = newState;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(PoliceCar.prototype, "health", {
             get: function () {
                 return this._health;
             },
@@ -35,7 +46,7 @@ var objects;
             configurable: true
         });
         // PRIVATE METHODS
-        Avatar.prototype._checkBounds = function () {
+        PoliceCar.prototype._checkBounds = function () {
             // left boundary
             if (this.position.x <= this.halfWidth) {
                 this.position = new objects.Vector2(this.halfWidth, this.position.y);
@@ -45,38 +56,58 @@ var objects;
                 this.position = new objects.Vector2(config.Game.SCREEN_WIDTH - this.halfWidth, this.position.y);
             }
         };
-        Avatar.prototype._move = function () {
+        PoliceCar.prototype._move = function () {
             // let newPositionX = util.Mathf.Lerp(this.position.x, this.stage.mouseX, 0.05);
             // this.position = new Vector2(newPositionX, this._verticalPosition);
             var newPositionX = util.Mathf.Lerp(this.position.x, this.stage.mouseX, 0.05);
             var newPositionY = util.Mathf.Lerp(this.position.y, this.stage.mouseY, 0.05);
             this.position = new objects.Vector2(newPositionX, newPositionY);
         };
-        Avatar.prototype._checkHealth = function () {
+        PoliceCar.prototype._spin = function () {
+            // let newPositionX = util.Mathf.Lerp(this.position.x, this.stage.mouseX, 0.05);
+            // this.position = new Vector2(newPositionX, this._verticalPosition);
+            // if (createjs.Ticker.getTicks() % 4 == 0) {
+            //     this.position = Vector2.add(this.position, new Vector2(-5, -5));
+            // } else if (createjs.Ticker.getTicks() % 4 == 1) {
+            //     this.position = Vector2.add(this.position, new Vector2(-5, 5));
+            // } else if (createjs.Ticker.getTicks() % 4 == 2) {
+            //     this.position = Vector2.add(this.position, new Vector2(5, -5));
+            // } else if (createjs.Ticker.getTicks() % 4 == 3) {
+            //     this.position = Vector2.add(this.position, new Vector2(5, 5));
+            // }
+            this.position = objects.Vector2.add(this.position, new objects.Vector2(-5, -5));
+        };
+        PoliceCar.prototype._checkHealth = function () {
             if (this.health <= 0) {
                 console.log("You're already dead");
             }
         };
         // PUBLIC METHODS
-        Avatar.prototype.Start = function () {
-            this.name = "avatar";
+        PoliceCar.prototype.Start = function () {
+            this.name = "policeCar";
             // this._verticalPosition = 430; // locked to the bottom of the screen
             this._verticalPosition = 550; // locked to the bottom of the screen
         };
-        Avatar.prototype.Update = function () {
-            this._move();
+        PoliceCar.prototype.Update = function () {
+            if (this._isRotating) {
+                this.rotation += 10;
+                this._spin();
+            }
+            else {
+                this._move();
+            }
             this._checkBounds();
         };
-        Avatar.prototype.Reset = function () {
+        PoliceCar.prototype.Reset = function () {
         };
-        Avatar.prototype.shoot = function () {
+        PoliceCar.prototype.shoot = function () {
             console.log("Shoot!");
             console.log(this.x);
-            var weapon = new objects.Weapon(this.x, this.y, objects.Vector2.up());
-            return weapon;
+            var bullet = new objects.Bullet(this.x, this.y, objects.Vector2.up());
+            return bullet;
         };
-        return Avatar;
+        return PoliceCar;
     }(objects.GameObject));
-    objects.Avatar = Avatar;
+    objects.PoliceCar = PoliceCar;
 })(objects || (objects = {}));
-//# sourceMappingURL=Avatar.js.map
+//# sourceMappingURL=PoliceCar.js.map

@@ -14,41 +14,41 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var objects;
 (function (objects) {
-    var Island = /** @class */ (function (_super) {
-        __extends(Island, _super);
+    var Hole = /** @class */ (function (_super) {
+        __extends(Hole, _super);
         // PUBLIC PROPERTIES
         // CONSTRUCTOR
-        function Island() {
-            var _this = _super.call(this, config.Game.ASSETS.getResult("island"), new objects.Vector2(), true) || this;
+        function Hole() {
+            var _this = _super.call(this, config.Game.ASSETS.getResult("hole"), new objects.Vector2(), true) || this;
             _this.Start();
             return _this;
         }
         // PRIVATE METHODS
-        Island.prototype._checkBounds = function () {
+        Hole.prototype._checkBounds = function () {
             if (this.position.y > config.Game.SCREEN_HEIGHT + this.height) {
                 this.Reset();
             }
         };
-        Island.prototype._move = function () {
+        Hole.prototype._move = function () {
             this.position = objects.Vector2.add(this.position, this.velocity);
         };
         // PUBLIC METHODS
-        Island.prototype.Start = function () {
-            this.name = "island";
+        Hole.prototype.Start = function () {
+            this.name = "hole";
             this._verticalSpeed = 10; // 10 px per frame
             this.velocity = new objects.Vector2(0, this._verticalSpeed);
             this.Reset();
         };
-        Island.prototype.Update = function () {
+        Hole.prototype.Update = function () {
             this._move();
             this._checkBounds();
         };
-        Island.prototype.Reset = function () {
+        Hole.prototype.Reset = function () {
             var randomX = util.Mathf.RandomRange(this.halfWidth, config.Game.SCREEN_WIDTH - this.halfWidth);
             this.position = new objects.Vector2(randomX, -this.height, this);
         };
-        return Island;
+        return Hole;
     }(objects.GameObject));
-    objects.Island = Island;
+    objects.Hole = Hole;
 })(objects || (objects = {}));
-//# sourceMappingURL=Island.js.map
+//# sourceMappingURL=Hole.js.map

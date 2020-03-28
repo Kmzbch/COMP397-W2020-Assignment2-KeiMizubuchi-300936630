@@ -32,14 +32,14 @@ var scenes;
             this._playButton = new objects.Button(config.Game.ASSETS.getResult("playButton"), 320, 330, true);
             this._instructionsButton = new objects.Button(config.Game.ASSETS.getResult("instructionsButton"), 320, 380, true);
             this._exitButton = new objects.Button(config.Game.ASSETS.getResult("exitButton"), 320, 430, true);
-            this._ocean = new objects.Ocean();
+            this._road = new objects.Road();
             this.Main();
         };
         Menu.prototype.Update = function () {
-            this._ocean.Update();
+            this._road.Update();
         };
         Menu.prototype.Main = function () {
-            this.addChild(this._ocean);
+            this.addChild(this._road);
             this.addChild(this._gameTitle);
             this.addChild(this._playButton);
             this.addChild(this._instructionsButton);

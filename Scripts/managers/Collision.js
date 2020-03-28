@@ -10,20 +10,16 @@ var managers;
             if (objects.Vector2.sqrDistance(object1.position, object2.position) < (radii * radii)) {
                 if (!object2.isColliding) {
                     switch (object2.name) {
-                        case "island":
+                        case "hole":
                             console.log("Collision with Hole");
-                            config.Game.LIVES = 0;
-                            var props = new createjs.PlayPropsConfig().set({ volume: 0.4 });
-                            var bgm = createjs.Sound.play("explosion", props);
                             break;
-                        case "cloud":
-                            // if(object1.name === "weapon"){
-                            //     object2.health -= 0;
-                            // }
-                            console.log("Collision with Cloud");
+                        case "heart":
+                            console.log("Collision with Heart");
+                            break;
+                        case "truck":
+                            console.log("Collision with Truck");
                             break;
                     }
-                    // console.log("Collision!");
                     object2.isColliding = true;
                     return true;
                 }

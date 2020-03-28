@@ -5,7 +5,7 @@ module config {
         public static SCENE: scenes.State;
         public static ASSETS: createjs.LoadQueue;
         public static FPS: number = 60; // 60 Frames per second
-        public static CLOUD_NUM: number = 4;
+        public static TRUCK_NUM: number = 4;
 
         public static LIVES: number = 5;
         public static SCORE: number = 0;
