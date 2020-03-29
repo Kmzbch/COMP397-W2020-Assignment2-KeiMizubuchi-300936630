@@ -27,7 +27,7 @@ var scenes;
         // PUBLIC METHODS
         //initialize and instatiate
         Play.prototype.Start = function () {
-            var props = new createjs.PlayPropsConfig().set({ loop: -1, volume: 0.7 });
+            var props = new createjs.PlayPropsConfig().set({ loop: -1, volume: 0.2 });
             var bgm = createjs.Sound.play("bgm", props);
             this._scoreBoard = new managers.ScoreBoard();
             config.Game.SCORE_BOARD = this._scoreBoard;
@@ -53,8 +53,8 @@ var scenes;
             if (Math.floor(createjs.Ticker.getTicks() % 300) === 0) {
                 config.Game.SCORE += 100;
                 config.Game.SCORE_BOARD.Score = config.Game.SCORE;
-                var props = new createjs.PlayPropsConfig().set({ volume: 0.4 });
-                var bgm = createjs.Sound.play("score", props);
+                //                let props = new createjs.PlayPropsConfig().set({ volume: 0.2 })
+                var bgm = createjs.Sound.play("score", { volume: 0.2 });
                 console.log("Current Score: " + config.Game.SCORE_BOARD.Score);
                 if (config.Game.SCORE > config.Game.HIGH_SCORE) {
                     config.Game.HIGH_SCORE = config.Game.SCORE;
@@ -66,8 +66,8 @@ var scenes;
             this._heart.Update();
             managers.Collision.squaredRadiusCheck(this._policeCar, this._heart);
             if (this._heart.isColliding) {
-                var props = new createjs.PlayPropsConfig().set({ volume: 0.4 });
-                var bgm = createjs.Sound.play("lifeup", props);
+                //                let props = new createjs.PlayPropsConfig().set({ volume: 0.2 })
+                var bgm = createjs.Sound.play("lifeup", { volume: 0.2 });
                 if (config.Game.LIVES < 5) {
                     config.Game.LIVES += 1;
                     config.Game.SCORE_BOARD.Lives = config.Game.LIVES;
@@ -81,7 +81,7 @@ var scenes;
                 if (this._vulnerableCount > 300) {
                     // let props = new createjs.PlayPropsConfig().set({ volume: 0.4 })
                     // let bgm = createjs.Sound.play("hit", props);
-                    var props = new createjs.PlayPropsConfig().set({ volume: 0.4 });
+                    var props = new createjs.PlayPropsConfig().set({ volume: 0.2 });
                     var bgm = createjs.Sound.play("spin", props);
                     this._vulnerableCount = 0;
                     //                    config.Game.SCORE_BOARD.Lives -= 1;
@@ -95,9 +95,9 @@ var scenes;
             }
             this._trucks.forEach(function (truck) {
                 if (truck.health <= 0) {
-                    var props = new createjs.PlayPropsConfig().set({ volume: 0.4 });
-                    var bgm = createjs.Sound.play("explosion", props);
-                    var bgm2 = createjs.Sound.play("score", { volume: 0.4 });
+                    // let props = new createjs.PlayPropsConfig().set({ volume: 0.2 })
+                    var bgm = createjs.Sound.play("explosion", { volume: 0.2 });
+                    var bgm2 = createjs.Sound.play("score", { volume: 0.2 });
                     truck.health = 3;
                     truck.Reset();
                     config.Game.SCORE += 100;
@@ -109,7 +109,7 @@ var scenes;
                 _this._vulnerableCount += 1;
                 if (truck.isColliding) {
                     if (_this._vulnerableCount > 300) {
-                        var props = new createjs.PlayPropsConfig().set({ volume: 0.4 });
+                        var props = new createjs.PlayPropsConfig().set({ volume: 0.2 });
                         var bgm = createjs.Sound.play("hit", props);
                         _this._vulnerableCount = 0;
                         config.Game.LIVES -= 1;
@@ -135,8 +135,7 @@ var scenes;
             this.addChild(this._scoreBoard.ScoreLabel);
             // detect player lives
             if (config.Game.LIVES <= 0) {
-                var props = new createjs.PlayPropsConfig().set({ volume: 0.4 });
-                var bgm = createjs.Sound.play("explosion", props);
+                var bgm = createjs.Sound.play("explosion", { volume: 0.2 });
                 //util.GameConfig.SCENE_STATE = scenes.State.END;
                 config.Game.SCENE_STATE = scenes.State.GAMEOVER;
             }

@@ -21,7 +21,7 @@ module scenes {
         // PUBLIC METHODS
         public Start(): void {
             this._splash = new createjs.Bitmap(config.Game.ASSETS.getResult("splash"));
-            let props = new createjs.PlayPropsConfig().set({ delay: 500 })
+            let props = new createjs.PlayPropsConfig().set({ delay: 500, volume: 0.2 })
             let bgm = createjs.Sound.play("splashSound", props);
 
             this.Main();

@@ -28,7 +28,7 @@ var scenes;
         // PUBLIC METHODS
         Splash.prototype.Start = function () {
             this._splash = new createjs.Bitmap(config.Game.ASSETS.getResult("splash"));
-            var props = new createjs.PlayPropsConfig().set({ delay: 500 });
+            var props = new createjs.PlayPropsConfig().set({ delay: 500, volume: 0.2 });
             var bgm = createjs.Sound.play("splashSound", props);
             this.Main();
         };

@@ -37,7 +37,7 @@ var objects;
         Bullet.prototype.Start = function () {
             this.name = "bullet";
             // play sound
-            var bgm = createjs.Sound.play("shot");
+            var bgm = createjs.Sound.play("shot", { volume: 0.2 });
             this.Reset();
         };
         Bullet.prototype.Update = function () {

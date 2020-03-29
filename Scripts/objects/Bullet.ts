@@ -32,7 +32,7 @@ module objects {
             this.name = "bullet";
 
             // play sound
-            let bgm = createjs.Sound.play("shot");
+            let bgm = createjs.Sound.play("shot", { volume: 0.2 });
 
             this.Reset();
         }

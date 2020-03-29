@@ -33,7 +33,7 @@ module scenes {
         //initialize and instatiate
         public Start(): void {
 
-            let props = new createjs.PlayPropsConfig().set({ loop: -1, volume: 0.7 })
+            let props = new createjs.PlayPropsConfig().set({ loop: -1, volume: 0.2 })
             let bgm = createjs.Sound.play("bgm", props);
 
             this._scoreBoard = new managers.ScoreBoard();
@@ -73,8 +73,8 @@ module scenes {
                 config.Game.SCORE += 100;
                 config.Game.SCORE_BOARD.Score = config.Game.SCORE;
 
-                let props = new createjs.PlayPropsConfig().set({ volume: 0.4 })
-                let bgm = createjs.Sound.play("score", props);
+                //                let props = new createjs.PlayPropsConfig().set({ volume: 0.2 })
+                let bgm = createjs.Sound.play("score", { volume: 0.2 });
 
                 console.log("Current Score: " + config.Game.SCORE_BOARD.Score);
                 if (config.Game.SCORE > config.Game.HIGH_SCORE) {
@@ -93,8 +93,8 @@ module scenes {
 
             managers.Collision.squaredRadiusCheck(this._policeCar, this._heart);
             if (this._heart.isColliding) {
-                let props = new createjs.PlayPropsConfig().set({ volume: 0.4 })
-                let bgm = createjs.Sound.play("lifeup", props);
+                //                let props = new createjs.PlayPropsConfig().set({ volume: 0.2 })
+                let bgm = createjs.Sound.play("lifeup", { volume: 0.2 });
 
                 if (config.Game.LIVES < 5) {
                     config.Game.LIVES += 1;
@@ -111,7 +111,7 @@ module scenes {
                 if (this._vulnerableCount > 300) {
                     // let props = new createjs.PlayPropsConfig().set({ volume: 0.4 })
                     // let bgm = createjs.Sound.play("hit", props);
-                    let props = new createjs.PlayPropsConfig().set({ volume: 0.4 })
+                    let props = new createjs.PlayPropsConfig().set({ volume: 0.2 })
                     let bgm = createjs.Sound.play("spin", props);
 
                     this._vulnerableCount = 0;
@@ -128,9 +128,9 @@ module scenes {
 
             this._trucks.forEach(truck => {
                 if (truck.health <= 0) {
-                    let props = new createjs.PlayPropsConfig().set({ volume: 0.4 })
-                    let bgm = createjs.Sound.play("explosion", props);
-                    let bgm2 = createjs.Sound.play("score", { volume: 0.4 });
+                    // let props = new createjs.PlayPropsConfig().set({ volume: 0.2 })
+                    let bgm = createjs.Sound.play("explosion", { volume: 0.2 });
+                    let bgm2 = createjs.Sound.play("score", { volume: 0.2 });
 
 
 
@@ -149,7 +149,7 @@ module scenes {
                 this._vulnerableCount += 1;
                 if (truck.isColliding) {
                     if (this._vulnerableCount > 300) {
-                        let props = new createjs.PlayPropsConfig().set({ volume: 0.4 })
+                        let props = new createjs.PlayPropsConfig().set({ volume: 0.2 })
                         let bgm = createjs.Sound.play("hit", props);
 
                         this._vulnerableCount = 0;
@@ -181,8 +181,7 @@ module scenes {
 
             // detect player lives
             if (config.Game.LIVES <= 0) {
-                let props = new createjs.PlayPropsConfig().set({ volume: 0.4 })
-                let bgm = createjs.Sound.play("explosion", props);
+                let bgm = createjs.Sound.play("explosion", { volume: 0.2 });
 
                 //util.GameConfig.SCENE_STATE = scenes.State.END;
                 config.Game.SCENE_STATE = scenes.State.GAMEOVER;
