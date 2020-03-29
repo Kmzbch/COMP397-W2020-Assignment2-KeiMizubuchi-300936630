@@ -77,6 +77,7 @@ module objects {
             // reset spinning state
             this.isSpinning = false;
             this.rotation = 0;
+            this._health = 3;
 
             // set velocity
             this._verticalSpeed = util.Mathf.RandomRange(1, 2); // speed ranges from 5 to 10 px per frame

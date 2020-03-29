@@ -18,6 +18,7 @@ var Game = (function () {
     var assetManifest = [
         // images
         { id: "placeholder", src: "./Assets/images/placeholder.png" },
+        { id: "splash", src: "./Assets/images/splash.png" },
         { id: "playButton", src: "./Assets/images/playButton.png" },
         { id: "playAgainButton", src: "./Assets/images/playAgainButton.png" },
         { id: "instructionsButton", src: "./Assets/images/instructionsButton.png" },
@@ -30,6 +31,7 @@ var Game = (function () {
         { id: "truck", src: "./Assets/images/truck.png" },
         { id: "heart", src: "./Assets/images/heart.png" },
         // audio
+        { id: "splashSound", src: "./Assets/audio/splash.wav" },
         { id: "bgm", src: "./Assets/audio/bgm.mp3" },
         { id: "shot", src: "./Assets/audio/shot.wav" },
         { id: "score", src: "./Assets/audio/score.wav" },
@@ -56,7 +58,8 @@ var Game = (function () {
         createjs.Ticker.on('tick', Update);
         stage.enableMouseOver(20);
         currentSceneState = scenes.State.NO_SCENE;
-        config.Game.SCENE_STATE = scenes.State.MENU;
+        // config.Game.SCENE_STATE = scenes.State.MENU;
+        config.Game.SCENE_STATE = scenes.State.SPLASH;
     }
     /**
      * This function is triggered every frame (16ms)
@@ -82,6 +85,10 @@ var Game = (function () {
         }
         // switch to the new scene
         switch (config.Game.SCENE_STATE) {
+            case scenes.State.SPLASH:
+                console.log("switch to Menu Splash");
+                currentScene = new scenes.Splash();
+                break;
             case scenes.State.MENU:
                 console.log("switch to Menu Scene");
                 currentScene = new scenes.Menu();

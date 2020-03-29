@@ -56,6 +56,10 @@ module scenes {
                 config.Game.SCENE_STATE = scenes.State.INSTRUCTIONS;
             });
 
+            this._exitButton.on("click", () => {
+                config.Game.SCENE_STATE = scenes.State.SPLASH;
+            });
+
         }
 
         //

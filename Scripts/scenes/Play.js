@@ -68,8 +68,10 @@ var scenes;
             if (this._heart.isColliding) {
                 var props = new createjs.PlayPropsConfig().set({ volume: 0.4 });
                 var bgm = createjs.Sound.play("lifeup", props);
-                config.Game.LIVES += 1;
-                config.Game.SCORE_BOARD.Lives = config.Game.LIVES;
+                if (config.Game.LIVES < 5) {
+                    config.Game.LIVES += 1;
+                    config.Game.SCORE_BOARD.Lives = config.Game.LIVES;
+                }
                 this._heart.Reset();
             }
             //

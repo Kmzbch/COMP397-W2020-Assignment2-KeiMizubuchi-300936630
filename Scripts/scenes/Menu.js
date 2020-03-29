@@ -50,6 +50,9 @@ var scenes;
             this._instructionsButton.on("click", function () {
                 config.Game.SCENE_STATE = scenes.State.INSTRUCTIONS;
             });
+            this._exitButton.on("click", function () {
+                config.Game.SCENE_STATE = scenes.State.SPLASH;
+            });
         };
         //
         Menu.prototype.DetectClickEvent = function () {

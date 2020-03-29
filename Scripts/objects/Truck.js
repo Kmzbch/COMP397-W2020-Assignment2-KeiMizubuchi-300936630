@@ -81,6 +81,7 @@ var objects;
             // reset spinning state
             this.isSpinning = false;
             this.rotation = 0;
+            this._health = 3;
             // set velocity
             this._verticalSpeed = util.Mathf.RandomRange(1, 2); // speed ranges from 5 to 10 px per frame
             this._horizontalSpeed = util.Mathf.RandomRange(0, 0); // random horizontal draft
