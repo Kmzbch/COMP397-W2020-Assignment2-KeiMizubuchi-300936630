@@ -1,6 +1,13 @@
 "use strict";
-//IIFE - Immediately Invoked Function Expression
-//means -> self-executing anonymous function
+// Auther: Kei Mizubuchi
+// Student Number: 300936630
+// Creation Date: Mar 29, 2020
+// Game App description:
+//  Simple 2D Scrolling game built on Creatjs.
+//  Poice Car chases and fight with bank robbers' car on the browser
+// Revision History:
+// Mar 29, 2020 Version 0.1
+// Mar 29, 2020 Version 1.0
 var Game = (function () {
     // variable declarations
     var canvas = document.getElementsByTagName('canvas')[0];
@@ -9,42 +16,28 @@ var Game = (function () {
     var currentScene;
     var assets;
     var assetManifest = [
-        { id: "button", src: "./Assets/images/button.png" },
+        // images
         { id: "placeholder", src: "./Assets/images/placeholder.png" },
         { id: "playButton", src: "./Assets/images/playButton.png" },
+        { id: "playAgainButton", src: "./Assets/images/playAgainButton.png" },
         { id: "instructionsButton", src: "./Assets/images/instructionsButton.png" },
         { id: "exitButton", src: "./Assets/images/exitButton.png" },
-        { id: "nextButton", src: "./Assets/images/nextButton.png" },
         { id: "backButton", src: "./Assets/images/backButton.png" },
-        // https://opengameart.org/content/toon-road-texture
         { id: "road", src: "./Assets/images/road.png" },
-        // https://opengameart.org/content/top-down-pixel-police-car
         { id: "policeCar", src: "./Assets/images/policeCar.png" },
-        // https://opengameart.org/content/bullets-game-asset
         { id: "bullet", src: "./Assets/images/bullet.png" },
-        // https://flyclipart.com/crack-hole-png-png-image-hole-png-864547#
         { id: "hole", src: "./Assets/images/hole.png" },
-        //            https://opengameart.org/content/top-view-car-truck-sprites
         { id: "truck", src: "./Assets/images/truck.png" },
-        // Sound
-        // https://freemusicarchive.org/music/Komiku/Captain_Glouglous_Incredible_Week_Soundtrack/pog
-        { id: "bgm", src: "./Assets/audio/bgm.mp3" },
-        // https://freesound.org/people/Bird_man/sounds/275151/
-        { id: "shot", src: "./Assets/audio/shot.wav" },
-        //            https://freesound.org/people/MusicLegends/sounds/344307/
-        { id: "score", src: "./Assets/audio/score.wav" },
-        //            https://freesound.org/people/Iwiploppenisse/sounds/156031/
-        { id: "explosion", src: "./Assets/audio/explosion.mp3" },
-        // https://freesound.org/people/broumbroum/sounds/50549/
-        { id: "hit", src: "./Assets/audio/hit.wav" },
-        // https://freesound.org/people/Juandamb/sounds/430626/
-        { id: "spin", src: "./Assets/audio/spin.wav" },
-        // https://opengameart.org/content/heart-2
         { id: "heart", src: "./Assets/images/heart.png" },
-        // https://freesound.org/people/Scrampunk/sounds/345297/
+        // audio
+        { id: "bgm", src: "./Assets/audio/bgm.mp3" },
+        { id: "shot", src: "./Assets/audio/shot.wav" },
+        { id: "score", src: "./Assets/audio/score.wav" },
+        { id: "explosion", src: "./Assets/audio/explosion.mp3" },
+        { id: "hit", src: "./Assets/audio/hit.wav" },
+        { id: "spin", src: "./Assets/audio/spin.wav" },
         { id: "lifeup", src: "./Assets/audio/lifeup.wav" },
     ];
-    //https://opengameart.org/content/c64-style-racing-game
     function Preload() {
         assets = new createjs.LoadQueue(); // asset container
         config.Game.ASSETS = assets; // make a reference to the assets in the global config
@@ -63,14 +56,14 @@ var Game = (function () {
         createjs.Ticker.on('tick', Update);
         stage.enableMouseOver(20);
         currentSceneState = scenes.State.NO_SCENE;
-        config.Game.SCENE = scenes.State.Menu;
+        config.Game.SCENE_STATE = scenes.State.MENU;
     }
     /**
      * This function is triggered every frame (16ms)
      * The stage is then erased and redrawn
      */
     function Update() {
-        if (currentSceneState != config.Game.SCENE) {
+        if (currentSceneState != config.Game.SCENE_STATE) {
             Main();
         }
         currentScene.Update();
@@ -88,12 +81,12 @@ var Game = (function () {
             stage.removeAllChildren();
         }
         // switch to the new scene
-        switch (config.Game.SCENE) {
-            case scenes.State.Menu:
+        switch (config.Game.SCENE_STATE) {
+            case scenes.State.MENU:
                 console.log("switch to Menu Scene");
                 currentScene = new scenes.Menu();
                 break;
-            case scenes.State.Instructions:
+            case scenes.State.INSTRUCTIONS:
                 console.log("switch to Instructions Scene");
                 currentScene = new scenes.Instructions();
                 break;
@@ -101,17 +94,18 @@ var Game = (function () {
                 console.log("switch to Play Scene");
                 currentScene = new scenes.Play();
                 break;
-            case scenes.State.END:
-                console.log("switch to End Scene");
-                currentScene = new scenes.End();
+            case scenes.State.GAMEOVER:
+                console.log("switch to Gameover Scene");
+                currentScene = new scenes.Gameover();
                 break;
         }
-        currentSceneState = config.Game.SCENE;
+        currentSceneState = config.Game.SCENE_STATE;
         stage.addChild(currentScene);
     }
     window.addEventListener('load', Preload);
     // attach keydown and keyup event to the window
     window.addEventListener("click", function (event) {
+        // mouse event detected in Play scene
         if (currentScene && currentSceneState === scenes.State.PLAY) {
             currentScene.DetectClickEvent();
         }

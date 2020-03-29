@@ -35,6 +35,7 @@ var objects;
         // PUBLIC METHODS
         Hole.prototype.Start = function () {
             this.name = "hole";
+            // set velocity
             this._verticalSpeed = 10; // 10 px per frame
             this.velocity = new objects.Vector2(0, this._verticalSpeed);
             this.Reset();

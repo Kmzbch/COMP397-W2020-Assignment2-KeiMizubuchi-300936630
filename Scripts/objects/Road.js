@@ -25,6 +25,7 @@ var objects;
         }
         // PRIVATE METHODS
         Road.prototype._checkBounds = function () {
+            // display in loop
             if (this.y >= 0) {
                 this.Reset();
             }
@@ -34,15 +35,19 @@ var objects;
         };
         // PUBLIC METHODS
         Road.prototype.Start = function () {
+            // set velocity
             this._verticalSpeed = 10; // 10 px per frame
             this.velocity = new objects.Vector2(0, this._verticalSpeed);
             this.Reset();
         };
         Road.prototype.Update = function () {
-            this._move();
+            if (config.Game.SCENE_STATE === scenes.State.PLAY || config.Game.SCENE_STATE === scenes.State.GAMEOVER) {
+                this._move();
+            }
             this._checkBounds();
         };
         Road.prototype.Reset = function () {
+            // display in loop
             this.position = new objects.Vector2(0, -874);
         };
         return Road;

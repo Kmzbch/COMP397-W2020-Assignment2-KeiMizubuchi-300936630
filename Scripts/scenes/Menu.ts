@@ -5,7 +5,6 @@ module scenes {
         private _playButton: objects.Button;
         private _instructionsButton: objects.Button;
         private _exitButton: objects.Button;
-
         private _road: objects.Road;
 
         // PUBLIC PROPERTIES
@@ -22,12 +21,12 @@ module scenes {
         // PUBLIC METHODS
         public Start(): void {
             // instantiate a new Text object
-            this._gameTitle = new objects.Label("The Reckless", "80px", "Consolas", "#FFFF00", 320, 180, true);
+            this._gameTitle = new objects.Label(config.Game.GAME_TITLE, "60px", "Consolas", "#FFFF00", 320, 180, true);
 
             // buttons
             this._playButton = new objects.Button(config.Game.ASSETS.getResult("playButton"), 320, 330, true);
-            this._instructionsButton = new objects.Button(config.Game.ASSETS.getResult("instructionsButton"), 320, 380, true);
-            this._exitButton = new objects.Button(config.Game.ASSETS.getResult("exitButton"), 320, 430, true);
+            this._instructionsButton = new objects.Button(config.Game.ASSETS.getResult("instructionsButton"), 320, 400, true);
+            this._exitButton = new objects.Button(config.Game.ASSETS.getResult("exitButton"), 320, 470, true);
 
 
             this._road = new objects.Road();
@@ -50,11 +49,11 @@ module scenes {
             this.addChild(this._exitButton);
 
             this._playButton.on("click", () => {
-                config.Game.SCENE = scenes.State.PLAY;
+                config.Game.SCENE_STATE = scenes.State.PLAY;
             });
 
             this._instructionsButton.on("click", () => {
-                config.Game.SCENE = scenes.State.Instructions;
+                config.Game.SCENE_STATE = scenes.State.INSTRUCTIONS;
             });
 
         }

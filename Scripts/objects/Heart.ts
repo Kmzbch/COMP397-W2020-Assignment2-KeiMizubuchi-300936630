@@ -26,8 +26,11 @@ module objects {
         // PUBLIC METHODS
         public Start(): void {
             this.name = "heart";
+
+            // set velocity
             this._verticalSpeed = 10; // 10 px per frame
             this.velocity = new Vector2(0, this._verticalSpeed);
+
             this.Reset();
         }
 
@@ -37,7 +40,9 @@ module objects {
         }
 
         public Reset(): void {
+            // heart generated at a random position
             let randomX = util.Mathf.RandomRange(this.halfWidth, config.Game.SCREEN_WIDTH - this.halfWidth);
+
             this.position = new Vector2(randomX, -1800, this);
         }
     }

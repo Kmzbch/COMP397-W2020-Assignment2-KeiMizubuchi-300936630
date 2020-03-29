@@ -1,15 +1,15 @@
 module objects {
     export class Bullet extends GameObject {
 
+        // private fields
         private _verticalSpeed?: number;
         private _horizontalSpeed?: number;
 
+        // constructor
         constructor(x: number, y: number, direction: Vector2 = Vector2.zero()) {
             super(config.Game.ASSETS.getResult("bullet"), new Vector2(x, y), true);
 
-            let props = new createjs.PlayPropsConfig().set({ volume: 1.5 })
-            let bgm = createjs.Sound.play("shot", props);
-
+            // set bullet velocity
             let speed = 10;
             direction.scale(speed);
             this.velocity = direction; // velocity = direction * speed
@@ -19,9 +19,7 @@ module objects {
 
         // private method
         protected _checkBounds(): void {
-            // if (this.position.y > config.Game.SCREEN_HEIGHT + this.height) {
-            //     this.Reset();
-            // }
+
         }
 
         private _move(): void {
@@ -33,6 +31,9 @@ module objects {
         public Start(): void {
             this.name = "bullet";
 
+            // play sound
+            let bgm = createjs.Sound.play("shot");
+
             this.Reset();
         }
 
@@ -42,17 +43,8 @@ module objects {
         }
 
         public Reset(): void {
-            // this._verticalSpeed = util.Mathf.RandomRange(5, 10); // speed ranges from 5 to 10 px per frame
-            // this._horizontalSpeed = util.Mathf.RandomRange(-2, 2); // random horizontal draft
-            // this.velocity = new Vector2(this._horizontalSpeed, this._verticalSpeed);
 
-            // let randomX = util.Mathf.RandomRange(this.halfWidth, config.Game.SCREEN_WIDTH - this.halfWidth);
-            // let randomY = util.Mathf.RandomRange(-this.height * 2, -this.height);
-
-            // this.position = new Vector2(randomX, randomY, this);
         }
-
-
 
     }
 }

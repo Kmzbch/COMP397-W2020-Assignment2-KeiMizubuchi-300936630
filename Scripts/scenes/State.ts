@@ -1,10 +1,10 @@
 module scenes {
     export enum State {
         NO_SCENE = -1,
-        Menu,
-        Instructions,
+        MENU,
+        INSTRUCTIONS,
         PLAY,
-        END,
+        GAMEOVER,
         NUM_OF_SCENES
     }
 }

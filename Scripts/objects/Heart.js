@@ -35,6 +35,7 @@ var objects;
         // PUBLIC METHODS
         Heart.prototype.Start = function () {
             this.name = "heart";
+            // set velocity
             this._verticalSpeed = 10; // 10 px per frame
             this.velocity = new objects.Vector2(0, this._verticalSpeed);
             this.Reset();
@@ -44,6 +45,7 @@ var objects;
             this._checkBounds();
         };
         Heart.prototype.Reset = function () {
+            // heart generated at a random position
             var randomX = util.Mathf.RandomRange(this.halfWidth, config.Game.SCREEN_WIDTH - this.halfWidth);
             this.position = new objects.Vector2(randomX, -1800, this);
         };

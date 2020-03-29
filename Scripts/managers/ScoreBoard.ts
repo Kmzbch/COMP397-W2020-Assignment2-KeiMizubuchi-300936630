@@ -8,11 +8,11 @@ module managers {
         private _highScoreLabel: objects.Label;
         private _highScore: number;
 
-
-        // public properties
+        // PUBLIC PROPATIES
         public get LivesLabel(): objects.Label {
             return this._livesLabel;
         }
+
         public get ScoreLabel(): objects.Label {
             return this._scoreLabel;
         }
@@ -34,15 +34,17 @@ module managers {
         public get Lives(): number {
             return this._lives;
         }
+
         public set Lives(v: number) {
             this._lives = v;
+            this.LivesLabel.text = "Lives: " + this._lives;
+
+            // change text color depending on the number
             if (this._lives <= 1) {
                 this.LivesLabel.color = "#FF0000";
             } else {
                 this.LivesLabel.color = "#FFFF00";
             }
-            config.Game.LIVES = this._lives;
-            this.LivesLabel.text = "Lives: " + this._lives;
         }
 
         public get Score(): number {
@@ -51,7 +53,7 @@ module managers {
 
         public set Score(v: number) {
             this._score = v;
-            config.Game.SCORE = this._score;
+
             this.ScoreLabel.text = "Score: " + this._score;
         }
 

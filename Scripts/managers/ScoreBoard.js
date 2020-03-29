@@ -7,7 +7,7 @@ var managers;
             this._initialize();
         }
         Object.defineProperty(ScoreBoard.prototype, "LivesLabel", {
-            // public properties
+            // PUBLIC PROPATIES
             get: function () {
                 return this._livesLabel;
             },
@@ -46,14 +46,14 @@ var managers;
             },
             set: function (v) {
                 this._lives = v;
+                this.LivesLabel.text = "Lives: " + this._lives;
+                // change text color depending on the number
                 if (this._lives <= 1) {
                     this.LivesLabel.color = "#FF0000";
                 }
                 else {
                     this.LivesLabel.color = "#FFFF00";
                 }
-                config.Game.LIVES = this._lives;
-                this.LivesLabel.text = "Lives: " + this._lives;
             },
             enumerable: true,
             configurable: true
@@ -64,7 +64,6 @@ var managers;
             },
             set: function (v) {
                 this._score = v;
-                config.Game.SCORE = this._score;
                 this.ScoreLabel.text = "Score: " + this._score;
             },
             enumerable: true,

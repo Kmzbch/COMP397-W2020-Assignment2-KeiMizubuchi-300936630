@@ -19,8 +19,7 @@ var objects;
         // CONSTRUCTOR
         function Truck() {
             var _this = _super.call(this, config.Game.ASSETS.getResult("truck"), new objects.Vector2(), true) || this;
-            _this._isRotating = false;
-            _this._health = 3;
+            _this._isSpinning = false;
             _this._health = 3;
             _this.Start();
             return _this;
@@ -36,18 +35,19 @@ var objects;
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(Truck.prototype, "isRotating", {
+        Object.defineProperty(Truck.prototype, "isSpinning", {
             get: function () {
-                return this._isRotating;
+                return this._isSpinning;
             },
             set: function (newState) {
-                this._isRotating = newState;
+                this._isSpinning = newState;
             },
             enumerable: true,
             configurable: true
         });
         // PRIVATE METHODS
         Truck.prototype._checkBounds = function () {
+            // check each bound
             if (this.position.y > config.Game.SCREEN_HEIGHT + this.height) {
                 this.Reset();
             }
@@ -67,24 +67,25 @@ var objects;
         // PUBLIC METHODS
         Truck.prototype.Start = function () {
             this.name = "truck";
-            //            this.alpha = 0.5; // transparency set to 50%
             this.Reset();
         };
         Truck.prototype.Update = function () {
             this._move();
-            if (this._isRotating) {
+            // when spinning
+            if (this._isSpinning) {
                 this.rotation += 10;
             }
             this._checkBounds();
         };
         Truck.prototype.Reset = function () {
-            this.isRotating = false;
+            // reset spinning state
+            this.isSpinning = false;
             this.rotation = 0;
-            // this._verticalSpeed = util.Mathf.RandomRange(5, 10); // speed ranges from 5 to 10 px per frame
-            // this._horizontalSpeed = util.Mathf.RandomRange(-2, 2); // random horizontal draft
+            // set velocity
             this._verticalSpeed = util.Mathf.RandomRange(1, 2); // speed ranges from 5 to 10 px per frame
             this._horizontalSpeed = util.Mathf.RandomRange(0, 0); // random horizontal draft
             this.velocity = new objects.Vector2(this._horizontalSpeed, this._verticalSpeed);
+            // set start position
             var randomX = util.Mathf.RandomRange(this.halfWidth, config.Game.SCREEN_WIDTH - this.halfWidth);
             var randomY = util.Mathf.RandomRange(-this.height * 2, -this.height);
             this.position = new objects.Vector2(randomX, randomY, this);

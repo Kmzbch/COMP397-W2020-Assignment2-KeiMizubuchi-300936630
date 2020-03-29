@@ -70,7 +70,9 @@ module scenes {
 
             // get score as move
             if (Math.floor(createjs.Ticker.getTicks() % 300) === 0) {
-                config.Game.SCORE_BOARD.Score += 100;
+                config.Game.SCORE += 100;
+                config.Game.SCORE_BOARD.Score = config.Game.SCORE;
+
                 let props = new createjs.PlayPropsConfig().set({ volume: 0.4 })
                 let bgm = createjs.Sound.play("score", props);
 
@@ -94,7 +96,9 @@ module scenes {
                 let props = new createjs.PlayPropsConfig().set({ volume: 0.4 })
                 let bgm = createjs.Sound.play("lifeup", props);
 
-                config.Game.SCORE_BOARD.Lives += 1;
+                config.Game.LIVES += 1;
+                config.Game.SCORE_BOARD.Lives = config.Game.LIVES;
+
                 this._heart.Reset();
             }
 
@@ -110,58 +114,61 @@ module scenes {
 
                     this._vulnerableCount = 0;
                     //                    config.Game.SCORE_BOARD.Lives -= 1;
-                    this._policeCar.isRotating = true;
+                    this._policeCar.isSpinning = true;
                     this._policeCar.velocity = new objects.Vector2(-this._policeCar.velocity.x * 6, -2);
                 }
             }
             if (this._vulnerableCount > 120) {
-                this._policeCar.isRotating = false;
+                this._policeCar.isSpinning = false;
                 this._policeCar.rotation = 0;
             }
 
 
-            this._trucks.forEach(t => {
-                if (t.health <= 0) {
+            this._trucks.forEach(truck => {
+                if (truck.health <= 0) {
                     let props = new createjs.PlayPropsConfig().set({ volume: 0.4 })
                     let bgm = createjs.Sound.play("explosion", props);
+                    let bgm2 = createjs.Sound.play("score", { volume: 0.4 });
 
 
-                    t.health = 3;
-                    t.Reset();
 
-                    config.Game.SCORE_BOARD.Score += 100;
-                    config.Game.SCORE = config.Game.SCORE;
+                    truck.health = 3;
+                    truck.Reset();
+
+                    config.Game.SCORE += 100;
+                    config.Game.SCORE_BOARD.Score = config.Game.SCORE;
                     config.Game.HIGH_SCORE = config.Game.SCORE;
-                    //                    config.Game.SCORE_BOARD
                 }
-                t.Update();
+                truck.Update();
 
 
-                managers.Collision.squaredRadiusCheck(this._policeCar, t);
+                managers.Collision.squaredRadiusCheck(this._policeCar, truck);
 
                 this._vulnerableCount += 1;
-                if (t.isColliding) {
+                if (truck.isColliding) {
                     if (this._vulnerableCount > 300) {
                         let props = new createjs.PlayPropsConfig().set({ volume: 0.4 })
                         let bgm = createjs.Sound.play("hit", props);
 
                         this._vulnerableCount = 0;
-                        config.Game.SCORE_BOARD.Lives -= 1;
-                        t.isRotating = true;
-                        t.velocity = new objects.Vector2(-t.velocity.x * 6, -2);
+                        config.Game.LIVES -= 1;
+                        config.Game.SCORE_BOARD.Lives = config.Game.LIVES;
+
+                        truck.isSpinning = true;
+                        truck.velocity = new objects.Vector2(-truck.velocity.x * 6, -2);
                     }
                 }
             });
 
-            this.bullets.forEach(b => {
-                b.Update();
-                this._trucks.forEach(c => {
-                    managers.Collision.squaredRadiusCheck(b, c);
-                    if (c.isColliding) {
-                        console.log(c.health);
-                        c.health -= 1;
-                        this.removeChild(b);
-                        this.bullets.splice(this.bullets.indexOf(b), 1); // remove the bullet from the list
+            this.bullets.forEach(bullet => {
+                bullet.Update();
+                this._trucks.forEach(truck => {
+                    managers.Collision.squaredRadiusCheck(bullet, truck);
+                    if (truck.isColliding) {
+                        console.log(truck.health);
+                        truck.health -= 1;
+                        this.removeChild(bullet);
+                        this.bullets.splice(this.bullets.indexOf(bullet), 1); // remove the bullet from the list
                     }
                 })
             })
@@ -169,13 +176,14 @@ module scenes {
             this.addChild(this._scoreBoard.LivesLabel);
             this.addChild(this._scoreBoard.ScoreLabel);
 
+
             // detect player lives
             if (config.Game.LIVES <= 0) {
                 let props = new createjs.PlayPropsConfig().set({ volume: 0.4 })
                 let bgm = createjs.Sound.play("explosion", props);
 
                 //util.GameConfig.SCENE_STATE = scenes.State.END;
-                config.Game.SCENE = scenes.State.END;
+                config.Game.SCENE_STATE = scenes.State.GAMEOVER;
             }
 
         }

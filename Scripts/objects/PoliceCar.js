@@ -19,28 +19,17 @@ var objects;
         // CONSTRUCTOR
         function PoliceCar() {
             var _this = _super.call(this, config.Game.ASSETS.getResult("policeCar"), 0, 0, true) || this;
-            _this._health = 2;
-            _this._isRotating = false;
+            _this._isSpinning = false;
             _this.Start();
             return _this;
         }
-        Object.defineProperty(PoliceCar.prototype, "isRotating", {
+        Object.defineProperty(PoliceCar.prototype, "isSpinning", {
             // PUBLIC PROPERTIES
             get: function () {
-                return this._isRotating;
+                return this._isSpinning;
             },
             set: function (newState) {
-                this._isRotating = newState;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(PoliceCar.prototype, "health", {
-            get: function () {
-                return this._health;
-            },
-            set: function (newNum) {
-                this._health = newNum;
+                this._isSpinning = newState;
             },
             enumerable: true,
             configurable: true
@@ -57,39 +46,22 @@ var objects;
             }
         };
         PoliceCar.prototype._move = function () {
-            // let newPositionX = util.Mathf.Lerp(this.position.x, this.stage.mouseX, 0.05);
-            // this.position = new Vector2(newPositionX, this._verticalPosition);
             var newPositionX = util.Mathf.Lerp(this.position.x, this.stage.mouseX, 0.05);
             var newPositionY = util.Mathf.Lerp(this.position.y, this.stage.mouseY, 0.05);
             this.position = new objects.Vector2(newPositionX, newPositionY);
         };
         PoliceCar.prototype._spin = function () {
-            // let newPositionX = util.Mathf.Lerp(this.position.x, this.stage.mouseX, 0.05);
-            // this.position = new Vector2(newPositionX, this._verticalPosition);
-            // if (createjs.Ticker.getTicks() % 4 == 0) {
-            //     this.position = Vector2.add(this.position, new Vector2(-5, -5));
-            // } else if (createjs.Ticker.getTicks() % 4 == 1) {
-            //     this.position = Vector2.add(this.position, new Vector2(-5, 5));
-            // } else if (createjs.Ticker.getTicks() % 4 == 2) {
-            //     this.position = Vector2.add(this.position, new Vector2(5, -5));
-            // } else if (createjs.Ticker.getTicks() % 4 == 3) {
-            //     this.position = Vector2.add(this.position, new Vector2(5, 5));
-            // }
             this.position = objects.Vector2.add(this.position, new objects.Vector2(-5, -5));
-        };
-        PoliceCar.prototype._checkHealth = function () {
-            if (this.health <= 0) {
-                console.log("You're already dead");
-            }
         };
         // PUBLIC METHODS
         PoliceCar.prototype.Start = function () {
             this.name = "policeCar";
-            // this._verticalPosition = 430; // locked to the bottom of the screen
-            this._verticalPosition = 550; // locked to the bottom of the screen
+            // start position
+            this._verticalPosition = 550;
+            this.Reset();
         };
         PoliceCar.prototype.Update = function () {
-            if (this._isRotating) {
+            if (this._isSpinning) {
                 this.rotation += 10;
                 this._spin();
             }
@@ -101,10 +73,7 @@ var objects;
         PoliceCar.prototype.Reset = function () {
         };
         PoliceCar.prototype.shoot = function () {
-            console.log("Shoot!");
-            console.log(this.x);
-            var bullet = new objects.Bullet(this.x, this.y, objects.Vector2.up());
-            return bullet;
+            return new objects.Bullet(this.x, this.y, objects.Vector2.up());
         };
         return PoliceCar;
     }(objects.GameObject));

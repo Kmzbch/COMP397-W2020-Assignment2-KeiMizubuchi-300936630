@@ -4,6 +4,8 @@ var config;
     var Game = /** @class */ (function () {
         function Game() {
         }
+        // constants
+        Game.GAME_TITLE = "THE GREAT BANDITS";
         Game.SCREEN_WIDTH = 640;
         Game.SCREEN_HEIGHT = 640;
         Game.FPS = 60; // 60 Frames per second
